@@ -1,0 +1,24 @@
+﻿<configuration>
+    <system.serviceModel>
+        <bindings>
+            <basicHttpBinding>
+                <binding name="ProductManagerSoap11Binding" maxBufferSize="2147483647"
+                    maxReceivedMessageSize="2147483647">
+                    <security mode="None" />
+                </binding>
+                <binding name="GlobalManagerSoap11Binding" maxBufferSize="2147483647"
+                    maxReceivedMessageSize="2147483647">
+                    <security mode="None" />
+                </binding>
+            </basicHttpBinding>
+        </bindings>
+        <client>
+            <endpoint address="http://163.5.84.202/UpReal/services/ProductManager.ProductManagerHttpSoap11Endpoint/"
+                binding="basicHttpBinding" bindingConfiguration="ProductManagerSoap11Binding"
+                contract="ProductManager.ProductManagerPortType" name="ProductManagerHttpSoap11Endpoint" />
+            <endpoint address="http://163.5.84.202/UpReal/services/GlobalManager.GlobalManagerHttpSoap11Endpoint/"
+                binding="basicHttpBinding" bindingConfiguration="GlobalManagerSoap11Binding"
+                contract="GlobalManager.GlobalManagerPortType" name="GlobalManagerHttpSoap11Endpoint" />
+        </client>
+    </system.serviceModel>
+</configuration>

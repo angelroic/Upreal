@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+  <metadata>
+    <id>CodeForceLib.Picasa</id>
+    <version>2.0</version>
+    <title>CodeForceLib.Picasa</title>
+    <authors>d1820</authors>
+    <owners>d1820</owners>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>Provides a C# wrapper to connect manage and update Google Picasa web albums</description>
+    <summary>Provides a C# wrapper to connect manage and update Google Picasa web albums</summary>
+  </metadata>
+</package>
