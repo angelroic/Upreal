@@ -81,8 +81,8 @@
                 <Button Content="Ma liste de produit  a troquer" HorizontalAlignment="Left" Margin="-9,244,-11,0" Grid.Row="1" VerticalAlignment="Top" Height="83" Width="500"/>
                 <Rectangle Fill="#FFF4F4F5" HorizontalAlignment="Left" Height="43" Margin="0,316,0,0" Grid.Row="1" Stroke="Black" VerticalAlignment="Top" Width="480"/>
                 <TextBlock HorizontalAlignment="Left" Margin="139,316,0,0" Grid.Row="1" TextWrapping="Wrap" Text="Mes listes personalises" VerticalAlignment="Top" Foreground="#FF1E1717"/>
-                <ListBox HorizontalAlignment="Left" Height="281" Margin="0,364,0,0" Grid.Row="1" VerticalAlignment="Top" Width="480"/>
-                <Button Content="Ajouter une liste" HorizontalAlignment="Left" Margin="0,633,0,0" Grid.Row="1" VerticalAlignment="Top" Height="68" RenderTransformOrigin="0.55,-0.109" Width="480"/>
+                <ListBox Name="ListItem" HorizontalAlignment="Left" Height="281" Margin="10,364,0,0" Grid.Row="1" VerticalAlignment="Top" Width="470"/>
+                <Button Content="Ajouter une liste" HorizontalAlignment="Left" Margin="0,633,0,0" Grid.Row="1" VerticalAlignment="Top" Height="68" RenderTransformOrigin="0.55,-0.109" Width="480" Click="AjouterListButton_Click"/>
 
             </Grid>
         </Canvas>

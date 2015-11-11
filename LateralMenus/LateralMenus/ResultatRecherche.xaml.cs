@@ -134,21 +134,11 @@ namespace LateralMenus
             if (NavigationContext.QueryString.TryGetValue("msg", out object_name))
             {
                 List<Item> List = new List<Item>();
-                HttpClient httpClient = new HttpClient();
+                WebService web = new WebService();
 
-                httpClient.DefaultRequestHeaders.Accept.TryParseAdd("text/xml");
-                HttpContent content = new StringContent("", Encoding.UTF8, "text/xml");
-
-            //    var Response = await httpClient.GetAsync(new Uri("http://163.5.84.202/UpReal/services/ProductManager/getProduct?keyword=" + object_name));
-                var Response = await httpClient.GetAsync(new Uri("http://10.224.9.202/UpReal/services/ProductManager/getProduct?keyword=" + object_name));
-                //(new Uri(url), content);
-                var statusCode = Response.StatusCode;
-
-                Response.EnsureSuccessStatusCode();
-                var ResponseText = await Response.Content.ReadAsStringAsync();
-                XElement doc = XElement.Parse(ResponseText);
-
-                var query = doc.Descendants();
+                var task = web.AskWebService("ProductManager/getProduct?keyword=" + object_name);
+                await task;
+                var query = web.value.Descendants();
                 string tempo = "";
                 foreach (XElement ele in query)
                 {
@@ -159,8 +149,8 @@ namespace LateralMenus
                     }
                     if (ele.Name.ToString().Contains("picture"))
                     {
-                      
-                        Item p = new Item() { name = tempo, imagePath = "http://10.224.9.202/Symfony/web/images/Product/" + ele.Value  };
+
+                        Item p = new Item() { name = tempo, imagePath = Img.ecole +"Product/" + ele.Value };
                         List.Add(p);
                     }
                 };
@@ -173,28 +163,17 @@ namespace LateralMenus
         async private void DoMyUtilisateur(string object_name)
         {
             List<Item> List1 = new List<Item>();
-            HttpClient httpClient = new HttpClient();
+            WebService web = new WebService();
 
-            httpClient.DefaultRequestHeaders.Accept.TryParseAdd("text/xml");
-            HttpContent content = new StringContent("", Encoding.UTF8, "text/xml");
-
-            //var Response = await httpClient.GetAsync(new Uri("http://163.5.84.202/UpReal/services/UserManager/getUserByUsername?username=" + object_name));
-            var Response = await httpClient.GetAsync(new Uri("http://10.224.9.202/UpReal/services/UserManager/getUserByUsername?username=" + object_name));
- 
-            //(new Uri(url), content);
-            var statusCode = Response.StatusCode;
-
-            Response.EnsureSuccessStatusCode();
-            var ResponseText = await Response.Content.ReadAsStringAsync();
-            XElement doc = XElement.Parse(ResponseText);
-    
-            var query = doc.Descendants();
+            var task = web.AskWebService("UserManager/getUserByUsername?username=" + object_name);
+            await task;
+            var query = web.value.Descendants();
             foreach (XElement ele in query)
             {
                 if (ele.Name.ToString().Contains("username"))
                 {
-                    
-                    Item p = new Item() { name = ele.Value, imagePath = "http://10.224.9.202/Symfony/web/images/user/" + tempo };
+
+                    Item p = new Item() { name = ele.Value, imagePath = Img.ecole+ "user/" + tempo };
                     List1.Add(p);
 
                 }
@@ -209,22 +188,11 @@ namespace LateralMenus
         async private void DoMyBrand(string object_name)
         {
             List<Item> List2 = new List<Item>();
-            HttpClient httpClient = new HttpClient();
+            WebService web = new WebService();
 
-            httpClient.DefaultRequestHeaders.Accept.TryParseAdd("text/xml");
-            HttpContent content = new StringContent("", Encoding.UTF8, "text/xml");
-
-            var Response = await httpClient.GetAsync(new Uri("http://10.224.9.202/UpReal/services/CompanyManager/getCompanyByName?keyword=" + object_name));
-            //var Response = await httpClient.GetAsync(new Uri("http://163.5.84.202/UpReal/services/CompanyManager/getCompanyByName?keyword=" + object_name));
-        
-            //(new Uri(url), content);
-            var statusCode = Response.StatusCode;
-
-            Response.EnsureSuccessStatusCode();
-            var ResponseText = await Response.Content.ReadAsStringAsync();
-            XElement doc = XElement.Parse(ResponseText);
-
-            var query = doc.Descendants();
+            var task = web.AskWebService("CompanyManager/getCompanyByName?keyword=" + object_name);
+            await task;
+            var query = web.value.Descendants();
             foreach (XElement ele in query)
             {
                     if (ele.Name.ToString().Contains("name"))
@@ -234,8 +202,8 @@ namespace LateralMenus
                     }
                     if (ele.Name.ToString().Contains("picture"))
                     {
-                      
-                        Item p = new Item() { name = tempo, imagePath = "http://10.224.9.202/Symfony/web/images/Product/" + ele.Value  };
+
+                        Item p = new Item() { name = tempo, imagePath = Img.ecole + "Product/" + ele.Value };
                         List2.Add(p);
                     }
                 };
@@ -243,23 +211,12 @@ namespace LateralMenus
         }
         async private void DoMyStoreList(string object_name)
         {
-            HttpClient httpClient = new HttpClient();
             List<Item> List3 = new List<Item>();
+            WebService web = new WebService();
 
-            httpClient.DefaultRequestHeaders.Accept.TryParseAdd("text/xml");
-            HttpContent content = new StringContent("", Encoding.UTF8, "text/xml");
-
-            var Response = await httpClient.GetAsync(new Uri("http://10.224.9.202/UpReal/services/StoreManager/getStoreByName?keyword=" + object_name));
-            //var Response = await httpClient.GetAsync(new Uri("http://163.5.84.202/UpReal/services/StoreManager/getStoreByName?keyword=" + object_name));
-        
-            //(new Uri(url), content);
-            var statusCode = Response.StatusCode;
-
-            Response.EnsureSuccessStatusCode();
-            var ResponseText = await Response.Content.ReadAsStringAsync();
-            XElement doc = XElement.Parse(ResponseText);
-
-            var query = doc.Descendants();
+            var task = web.AskWebService("StoreManager/getStoreByName?keyword=" + object_name);
+            await task;
+            var query = web.value.Descendants();
             foreach (XElement ele in query)
             {
                 if (ele.Name.ToString().Contains("name"))
@@ -270,7 +227,7 @@ namespace LateralMenus
                 if (ele.Name.ToString().Contains("picture"))
                 {
 
-                    Item p = new Item() { name = tempo, imagePath = "http://10.224.9.202/Symfony/web/images/Store/" + ele.Value };
+                    Item p = new Item() { name = tempo, imagePath =  Img.ecole+ "Store/" + ele.Value };
                     List3.Add(p);
                 }
             };
@@ -339,11 +296,6 @@ namespace LateralMenus
         {
             RechercheBox.Text = "";
         }
-
-        //private void MyListBox_DoubleTap(object sender, GestureEventArgs e)
-        //{
-        //    NavigationService.Navigate(new Uri("/ItemProfil.xaml?msg=" + ProduitList.SelectedItem.ToString(), UriKind.Relative));
-        //}
 
         private void MyListe_Click(object sender, RoutedEventArgs e)
         {

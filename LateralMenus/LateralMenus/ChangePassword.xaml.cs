@@ -7,16 +7,6 @@ using System.Windows.Controls;
 using System.Windows.Navigation;
 using Microsoft.Phone.Controls;
 using Microsoft.Phone.Shell;
-
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Navigation;
-using Microsoft.Phone.Controls;
-using Microsoft.Phone.Shell;
 using LateralMenus.Resources;
 using System.Windows.Input;
 using System.Windows.Media.Animation;
@@ -38,39 +28,38 @@ namespace LateralMenus
             InitializeComponent();
         }
 
-        async  private void Envoyer_Click(object sender, RoutedEventArgs e)
+        async private void Envoyer_Click(object sender, RoutedEventArgs e)
         {
             if (NewPass.Text == RetypePass.Text)
             {
-                      HttpClient httpClient = new HttpClient();
+                WebService web = new WebService();
 
-            httpClient.DefaultRequestHeaders.Accept.TryParseAdd("text/xml");
-            HttpContent content = new StringContent("", Encoding.UTF8, "text/xml");
-
-            var Response = await httpClient.GetAsync(new Uri("http://163.5.84.202/UpReal/services/UserManager/changePassword?id_user="  + Utilisateur.id.ToString() +"&old_password=" + AncienPass.Text + "&new_password=" + NewPass.Text));
-            //var Response = await httpClient.GetAsync(new Uri("http://163.5.84.202/UpReal/services/UserManager/connectAccount?username=popo&password=pipi"));
-
-            //(new Uri(url), content);
-            var statusCode = Response.StatusCode;
-
-            Response.EnsureSuccessStatusCode();
-            var ResponseText = await Response.Content.ReadAsStringAsync();
-            XElement doc = XElement.Parse(ResponseText);
-            if (Convert.ToBoolean(doc.Value) == true)
-            {
-                MessageBox.Show("Changement du mot de passe reussi");
-            }   
-else
-	{
-         MessageBox.Show("Changement de mot de passe n'a pas etait effectuer,veuillez reeesaye ulterieurement");
-	}
+                var task = web.AskWebService("UserManager/changePassword?id_user=" + Utilisateur.id.ToString() + "&old_password=" + AncienPass.Text + "&new_password=" + NewPass.Text);
+                await task;
+                var query = web.value.Descendants();
+                foreach (XElement ele in query)
+                {
+                    if (ele.Name.ToString().Contains("return"))
+                    {
+                        if (Convert.ToBoolean(ele.Value) == true)
+                        {
+                            MessageBox.Show("Changement du mot de passe reussi");
+                            NavigationService.Navigate(new Uri("/MainPage.xaml", UriKind.Relative));
+                        }
+                        else
+                        {
+                            MessageBox.Show("Changement de mot de passe n'a pas etait effectuer,veuillez reeesaye ulterieurement");
+                        }
+                    }
+                }
             }
             else
             {
                 MessageBox.Show("Mauvais mot de passe ou le nouveau mot de passe est mal taper");
             }
         }
-               private void OpenClose_Left(object sender, RoutedEventArgs e)
+
+        private void OpenClose_Left(object sender, RoutedEventArgs e)
         {
             var left = Canvas.GetLeft(LayoutRoot);
             if (left > -100)
@@ -220,12 +209,12 @@ else
 
         private void MyListe_Click(object sender, RoutedEventArgs e)
         {
-            NavigationService.Navigate(new Uri("/MyList.xaml", UriKind.Relative));    
+            NavigationService.Navigate(new Uri("/MyList.xaml", UriKind.Relative));
         }
 
         private void CarteFidel_Click(object sender, RoutedEventArgs e)
         {
-            NavigationService.Navigate(new Uri("/CarteFidel.xaml", UriKind.Relative)); 
+            NavigationService.Navigate(new Uri("/CarteFidel.xaml", UriKind.Relative));
         }
 
         private void MyScan_Click(object sender, RoutedEventArgs e)
@@ -250,5 +239,5 @@ else
 
 
     }
-    
+
 }

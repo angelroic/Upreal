@@ -29,6 +29,14 @@ namespace LateralMenus
             NomText.Text = Utilisateur.name;
             LoginText.Text = Utilisateur.username;
             VilleText.Text = Utilisateur.city;
+            if (Utilisateur.isConnect == false)
+            {
+                ConnexionButton.Content = "Connexion";
+            }
+            else
+            {
+                ConnexionButton.Content = "Mon profil";
+            }
         }
         private void OpenClose_Left(object sender, RoutedEventArgs e)
         {

@@ -18,52 +18,15 @@ using System.Xml.Linq;
 using System.Xml.Serialization;
 using System.Xml.Schema;
 using System.IO;
-using System.Windows.Media.Imaging;
-using System.Windows.Media;
 
 namespace LateralMenus
 {
-    public partial class NewPage : PhoneApplicationPage
+    public partial class Comment : PhoneApplicationPage
     {
-        public NewPage()
+        string id_pd;
+        public Comment()
         {
             InitializeComponent();
-        }
-        async protected override void OnNavigatedTo(NavigationEventArgs e)
-        {
-             base.OnNavigatedTo(e);
-            string item_name = "";
-            if (NavigationContext.QueryString.TryGetValue("msg", out item_name))
-            {
-             HttpClient httpClient = new HttpClient();
-            List<New> lnew = new List<New>();
-            httpClient.DefaultRequestHeaders.Accept.TryParseAdd("text/xml");
-            HttpContent content = new StringContent("", Encoding.UTF8, "text/xml");
-
-            var Response = await httpClient.GetAsync(new Uri("http://10.224.9.202//UpReal/services/GlobalManager/getNewsInfo?id=" + item_name));
-            var statusCode = Response.StatusCode;
-
-            Response.EnsureSuccessStatusCode();
-            var ResponseText = await Response.Content.ReadAsStringAsync();
-            XElement doc = XElement.Parse(ResponseText);
-            var query = doc.Descendants();
-            foreach (XElement ele in query)
-            {
-                if (ele.Name.ToString().Contains("picture"))
-                {
-                    ImageNew.Source = new BitmapImage(new Uri("http://10.224.9.202/Symfony/web/images/News/" + ele.Value, UriKind.Absolute));
-                }
-                if (ele.Name.ToString().Contains("body"))
-                {
-                    DescNew.Text = ele.Value;
-                }
-                if (ele.Name.ToString().Contains("title"))
-                {
-                    Title.Text = ele.Value;
-                }
-
-            }
-            }
         }
         private void OpenClose_Left(object sender, RoutedEventArgs e)
         {
@@ -153,7 +116,10 @@ namespace LateralMenus
             NavigationService.Navigate(new Uri("/ResultatRecherche.xaml?msg=" + RechercheBox.Text, UriKind.Relative));
 
         }
-
+        protected override void OnNavigatedTo(NavigationEventArgs e)
+        {
+            NavigationContext.QueryString.TryGetValue("msg", out id_pd);
+        }
         private void ConnexionButton_Click(object sender, RoutedEventArgs e)
         {
             if (Utilisateur.isConnect == false)
@@ -215,12 +181,12 @@ namespace LateralMenus
 
         private void MyListe_Click(object sender, RoutedEventArgs e)
         {
-            NavigationService.Navigate(new Uri("/MyList.xaml", UriKind.Relative));
+            NavigationService.Navigate(new Uri("/MyList.xaml", UriKind.Relative));    
         }
 
         private void CarteFidel_Click(object sender, RoutedEventArgs e)
         {
-            NavigationService.Navigate(new Uri("/CarteFidel.xaml", UriKind.Relative));
+            NavigationService.Navigate(new Uri("/CarteFidel.xaml", UriKind.Relative)); 
         }
 
         private void MyScan_Click(object sender, RoutedEventArgs e)
@@ -241,6 +207,32 @@ namespace LateralMenus
         private void Actualite_Click(object sender, RoutedEventArgs e)
         {
             NavigationService.Navigate(new Uri("/MainPage.xaml", UriKind.Relative));
+        }
+
+        private void Annuler_Click(object sender, RoutedEventArgs e)
+        {
+            NavigationService.GoBack();
+        }
+
+        async private void Envoyer_Click(object sender, RoutedEventArgs e)
+        {
+            List<New> lnew = new List<New>();
+            WebService web = new WebService();
+
+            var task = web.AskWebService("GlobalManager/createComment?id_user=" + Utilisateur.id + "&id_target=" + id_pd + "&id_target_type=2" + "&commentary=" + CommentText.Text);
+            await task;
+            var query = web.value.Descendants();
+            foreach (XElement ele in query)
+            {
+                if (ele.Name.ToString().Contains("return"))
+                {
+                    if (Convert.ToInt32(ele.Value) > 0)
+                    {
+                        MessageBox.Show("Ajout de commentaire reussi");
+                        NavigationService.GoBack();
+                    }
+                }
+            }
         }
     }
 }

@@ -88,7 +88,7 @@
                     <phone:PivotItem CacheMode="{x:Null}" Header="Social" Margin="10,26,14,2">
                         <Grid>
                             <Button x:Name="AimeButton" Content="Aimer" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="221" Height="180" Click="AimeButton_Click"/>
-                            <Button x:Name="CommentButton" Content="Commentaire" HorizontalAlignment="Left" Margin="217,10,0,0" VerticalAlignment="Top" Height="180" Width="239"/>
+                            <Button x:Name="CommentButton" Content="Commentaire" HorizontalAlignment="Left" Margin="217,10,0,0" VerticalAlignment="Top" Height="180" Width="239" Click="CommentButton_Click"/>
                             <Button x:Name="SimButton" Content="Produit Similaire" HorizontalAlignment="Left" Margin="10,170,0,0" VerticalAlignment="Top" Height="185"/>
                             <Button x:Name="PartagerButton" Content="Partager" HorizontalAlignment="Left" Margin="217,170,0,0" VerticalAlignment="Top" Width="239" Height="185"/>
 

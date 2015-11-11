@@ -18,11 +18,14 @@ using System.Xml.Linq;
 using System.Xml.Serialization;
 using System.Xml.Schema;
 using System.IO;
+using System.Threading.Tasks;
+
 
 namespace LateralMenus
 {
     public partial class Connect : PhoneApplicationPage
     {
+        public List<string> ListValue = new List<string>();
         public Connect()
         {
             InitializeComponent();
@@ -141,93 +144,177 @@ namespace LateralMenus
 
         async private void SendConnexionButton_Click(object sender, RoutedEventArgs e)
         {
-            HttpClient httpClient = new HttpClient();
-
-            httpClient.DefaultRequestHeaders.Accept.TryParseAdd("text/xml");
-            HttpContent content = new StringContent("", Encoding.UTF8, "text/xml");
-
-            var Response = await httpClient.GetAsync(new Uri("http://163.5.84.202/UpReal/services/UserManager/connectAccount?username=" + usernameBox.Text + "&password=" + passBox.Text));
-            //var Response = await httpClient.GetAsync(new Uri("http://163.5.84.202/UpReal/services/UserManager/connectAccount?username=popo&password=pipi"));
-
-            //(new Uri(url), content);
-            var statusCode = Response.StatusCode;
-
-            Response.EnsureSuccessStatusCode();
-            var ResponseText = await Response.Content.ReadAsStringAsync();
-            XElement doc = XElement.Parse(ResponseText);
-            if (Convert.ToBoolean(doc.Value) == true)
+            WebService web = new WebService();
+            var task = web.AskWebService("UserManager/connectAccount?username=" + usernameBox.Text + "&password=" + passBox.Text);
+            await task;
+            var query = web.value.Descendants();
+            foreach (XElement ele in query)
             {
-                MessageBox.Show("Connexion reussi");
-                Utilisateur.isConnect = true;
-                Find_id(usernameBox.Text);
-                NavigationService.Navigate(new Uri("/MainPage.xaml", UriKind.Relative));
-            }
-            else
-            {
-                MessageBox.Show("Compte utilisateur ou mot de passe incorrect");
+                if (ele.Name.ToString().Contains("return"))
+                {
+                    if (Convert.ToBoolean(ele.Value) == true)
+                    {
+                        Utilisateur.appSettings.Clear();
+           
+                        Utilisateur.isConnect = true;
+                        var b =  Find_id(usernameBox.Text);
+                        await b;
+                        var t = find_list(Utilisateur.id);
+                        await t;
+                        MessageBox.Show("Connexion reussi");
+                        NavigationService.Navigate(new Uri("/MainPage.xaml", UriKind.Relative));
+                    }
+                    else
+                    {
+                        MessageBox.Show("Compte utilisateur ou mot de passe incorrect");
+                    }
+                }
             }
         }
-
-        async void Find_id(string username)
+        async private Task<int> find_list(int id_user)
         {
-            HttpClient httpClient = new HttpClient();
+            WebService web = new WebService();
+            var task = web.AskWebService("GlobalManager/getUserList?id_user=" + id_user);
+            await task;
+            var query = web.value.Descendants();
+            list listInfo = new list();
+            foreach (XElement ele in query)
+            {
+                if (ele.Name.ToString().Contains("id") && ele.Name.ToString().Contains("id_user") == false)
+                {                 
+                    listInfo.id = Convert.ToInt32(ele.Value);
+                    var t =complet_list(Convert.ToInt32(ele.Value));
+                    await t;
+                }
+                if (ele.Name.ToString().Contains("name"))
+                {
+                    listInfo.name = ele.Value;
+                }
+                if (ele.Name.ToString().Contains("nb_items"))
+                {
+                    listInfo.nb_items = Convert.ToInt32(ele.Value);
+                }
+                if (ele.Name.ToString().Contains("publics"))
+                {
+                    listInfo.publics = Convert.ToInt32(ele.Value);
+                }
+                if (ele.Name.ToString().Contains("type"))
+                {
+                    listInfo.type = Convert.ToInt32(ele.Value);
+                    Utilisateur.myList.Add(listInfo.name, ListValue);
+                    listInfo = new list();
+                }
+            }
+            return 1;
+        }
+        async Task<int> find_product(int id)
+        {
+            WebService web = new WebService();
+            var task = web.AskWebService("ProductManager/getProductInfo?id=" + id);
+            await task;
+            var query = web.value.Descendants();
+           
+            foreach (XElement ele in query)
+            {
+                if ( ele.Name.ToString().Contains("name"))
+                {
+                    ListValue.Add(ele.Value);
+                }
+            }
+            return 1;
+        }
+        async Task<int> complet_list(int id)
+        {
+            WebService web = new WebService();
+            var task = web.AskWebService("GlobalManager/getItemsLists?id_list=" + id);
+            await task;
+            var query = web.value.Descendants();
+            ListValue.Clear();
+            foreach (XElement ele in query)
+            {
+                if(ele.Name.ToString().Contains("id_product"))
+                {
+                    var t = find_product(Convert.ToInt32(ele.Value));
+                    await t;
+                }
+            }
+            return 1;
+        }
 
-            httpClient.DefaultRequestHeaders.Accept.TryParseAdd("text/xml");
-            HttpContent content = new StringContent("", Encoding.UTF8, "text/xml");
+        async Task<int> Find_id(string username)
+        {
+            WebService web = new WebService();
 
-            var Response = await httpClient.GetAsync(new Uri("http://163.5.84.202/UpReal/services/UserManager/getUserByUsername?username=" + username));
-
-            var statusCode = Response.StatusCode;
-
-            Response.EnsureSuccessStatusCode();
-            var ResponseText = await Response.Content.ReadAsStringAsync();
-            XElement doc = XElement.Parse(ResponseText);
-            var query = doc.Descendants();
+            var task = web.AskWebService("UserManager/getUserByUsername?username=" + username);
+            await task;
+            var query = web.value.Descendants();
             int i = 0;
             foreach (XElement ele in query)
             {
                 if (i == 5)
+                {
                     Utilisateur.email = ele.Value;
+                    Utilisateur.appSettings.Add("email", Utilisateur.email);
+                    Utilisateur.appSettings.Save();
+                }
                 if (i == 6)
+                {
                     Utilisateur.firstname = ele.Value;
+                    Utilisateur.appSettings.Add("firstname", Utilisateur.firstname);
+                    Utilisateur.appSettings.Save();
+                }
                 if (i == 7)
+                {
                     Utilisateur.id = Convert.ToInt32(ele.Value);
+                    Utilisateur.appSettings.Add("id", Utilisateur.id);
+                    Utilisateur.appSettings.Save();
+                }
                 if (i == 8)
+                {
                     Utilisateur.city = ele.Value;
+                    Utilisateur.appSettings.Add("city", Utilisateur.city);
+                    Utilisateur.appSettings.Save();
+                }
                 if (i == 9)
+                {
                     Utilisateur.name = ele.Value;
-                if (i == 10)
-                    Utilisateur.password = ele.Value;
+                    Utilisateur.appSettings.Add("name", Utilisateur.name);
+                    Utilisateur.appSettings.Save();
+                }
+                //if (i == 10)
+                //{
+                //    Utilisateur.password = ele.Value;
+                //    Utilisateur.appSettings.Add("Name", Utilisateur.name);
+                //}
                 //if (i == 11)
                 //    Utilisateur.tel = Convert.ToInt32(ele.Value);
                 //short desc
                 //if (i == 13)
                 //    Utilisateur.email = ele.Value;
                 if (i == 14)
+                {
                     Utilisateur.username = ele.Value;
+                    Utilisateur.appSettings.Add("username", Utilisateur.username);
+                    Utilisateur.appSettings.Save();
+                }
                 i++;
             };
+            Utilisateur.appSettings.Add("connect", Utilisateur.isConnect);
+            Utilisateur.appSettings.Save();
+            return 1;
         }
 
         async private void SendInscriptionButton_Click(object sender, RoutedEventArgs e)
         {
-            HttpClient httpClient = new HttpClient();
+            WebService web = new WebService();
 
-            httpClient.DefaultRequestHeaders.Accept.TryParseAdd("text/xml");
-            HttpContent content = new StringContent("", Encoding.UTF8, "text/xml");
-
-            var Response = await httpClient.GetAsync(new Uri("http://163.5.84.202/UpReal/services/UserManager/registerAccount?" + "username=" + NameBox.Text + "&" + "password=" + PasswordBox.Text + "&" + "email=" + EmailBox.Text));
-
-            var statusCode = Response.StatusCode;
-
-            Response.EnsureSuccessStatusCode();
-            var ResponseText = await Response.Content.ReadAsStringAsync();
-            XElement doc = XElement.Parse(ResponseText);
-            if (Convert.ToInt32(doc.Value) == -1)
+            var task = web.AskWebService("UserManager/registerAccount?" + "username=" + NameBox.Text + "&" + "password=" + PasswordBox.Text + "&" + "email=" + EmailBox.Text);
+            await task;
+            if (Convert.ToInt32(web.value) == -1)
             {
                 MessageBox.Show("Username deja utilise");
             }
-            else if (Convert.ToInt32(doc.Value) == -2)
+            else if (Convert.ToInt32(web.value) == -2)
             {
                 MessageBox.Show("Email deja utilise");
             }

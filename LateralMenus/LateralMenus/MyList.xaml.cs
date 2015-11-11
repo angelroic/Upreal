@@ -206,5 +206,18 @@ namespace LateralMenus
             NavigationService.Navigate(new Uri("/MainPage.xaml", UriKind.Relative));
         }
 
+        private void AjouterListButton_Click(object sender, RoutedEventArgs e)
+        {
+
+            //Utilisateur.List;
+        }
+        protected override void OnNavigatedTo(NavigationEventArgs e)
+        {
+            foreach (string key in Utilisateur.myList.Keys)
+            {
+                ListItem.Items.Add(key);
+            }
+        }
+
     }
 }

@@ -38,21 +38,10 @@ namespace LateralMenus
             base.OnNavigatedTo(e);
             if (NavigationContext.QueryString.TryGetValue("msg", out item_name))
             {
-                HttpClient httpClient = new HttpClient();
-
-                httpClient.DefaultRequestHeaders.Accept.TryParseAdd("text/xml");
-                HttpContent content = new StringContent("", Encoding.UTF8, "text/xml");
-
-                //var Response = await httpClient.GetAsync(new Uri("http://163.5.84.202/UpReal/services/ProductManager/getProductByName?name=" + item_name));
-                var Response = await httpClient.GetAsync(new Uri("http://10.224.9.202/UpReal/services/ProductManager/getProductByName?name=" + item_name));
-
-                var statusCode = Response.StatusCode;
-
-                Response.EnsureSuccessStatusCode();
-                var ResponseText = await Response.Content.ReadAsStringAsync();
-                XElement doc = XElement.Parse(ResponseText);
-
-                var query = doc.Descendants();
+                WebService web = new WebService();
+                var task = web.AskWebService("ProductManager/getProductByName?name=" + item_name);
+                await task;
+                var query = web.value.Descendants();
                 foreach (XElement ele in query)
                 {
                     if (ele.Name.ToString().Contains("name"))
@@ -65,13 +54,12 @@ namespace LateralMenus
                     }
                     else if (ele.Name.ToString().Contains("picture"))
                     {
-                        // ImageProduit.Source = new BitmapImage(new Uri("http://163.5.84.202/Symfony/web/images/Product/" + ele.Value, UriKind.Absolute));
-                        ImageProduit.Source = new BitmapImage(new Uri("http://10.224.9.202/Symfony/web/images/Product/" + ele.Value, UriKind.Absolute));
+                        ImageProduit.Source = new BitmapImage(new Uri(Img.ecole + "Product/" + ele.Value, UriKind.Absolute));
                     }
                     else if (ele.Name.ToString().Contains("id"))
                     {
                         id_product = ele.Value;
-                         do_my_desc(ele.Value);
+                        do_my_desc(ele.Value);
                         do_my_comment(ele.Value);
                     }
                 };
@@ -82,21 +70,12 @@ namespace LateralMenus
 
         async private void do_my_comment(string id)
         {
-            HttpClient httpClient = new HttpClient();
-
-            httpClient.DefaultRequestHeaders.Accept.TryParseAdd("text/xml");
-            HttpContent content = new StringContent("", Encoding.UTF8, "text/xml");
-
-            //var Response = await httpClient.GetAsync(new Uri("http://163.5.84.202/UpReal/services/GlobalManager/getRate?id_target=" + id + "&id_target_type=2"));
-            var Response = await httpClient.GetAsync(new Uri("http://10.224.9.202/UpReal/services/GlobalManager/getRate?id_target=" + id + "&id_target_type=2"));
-
-            var statusCode = Response.StatusCode;
             string tempo = "";
-            Response.EnsureSuccessStatusCode();
-            var ResponseText = await Response.Content.ReadAsStringAsync();
-            XElement doc = XElement.Parse(ResponseText);
+            WebService web = new WebService();
 
-            var query = doc.Descendants();
+            var task = web.AskWebService("GlobalManager/getRate?id_target=" + id + "&id_target_type=2");
+            await task;
+            var query = web.value.Descendants();
             foreach (XElement ele in query)
             {
                 if (ele.Name.ToString().Contains("commentary"))
@@ -115,40 +94,24 @@ namespace LateralMenus
 
         async private void do_rate_comment(string id_user, string id, string comment)
         {
-            HttpClient httpClient = new HttpClient();
-
-            httpClient.DefaultRequestHeaders.Accept.TryParseAdd("text/xml");
-            HttpContent content = new StringContent("", Encoding.UTF8, "text/xml");
-
-            // var Response = await httpClient.GetAsync(new Uri("http://163.5.84.202/UpReal/services/GlobalManager/getRateStatus?id_user="+ id_user+ "&id_target=" + id + "&id_target_type=2"));
-            var Response = await httpClient.GetAsync(new Uri("http://10.224.9.202/UpReal/services/GlobalManager/getRateStatus?name=" + id_user + "&id_target=" + id + "&id_target_type=2"));
-
-            var statusCode = Response.StatusCode;
-
-            Response.EnsureSuccessStatusCode();
-            var ResponseText = await Response.Content.ReadAsStringAsync();
-            XElement doc = XElement.Parse(ResponseText);
-
-            var query = doc.Descendants();
-            CommentList.Items.Add(comment + "\t" + doc.Value);
+            WebService web = new WebService();
+            var task = web.AskWebService("GlobalManager/getRateStatus?id_user=" + id_user + "&id_target=" + id + "&id_target_type=2");
+            await task;
+            var query = web.value.Descendants();
+            foreach (XElement ele in query)
+            {
+                if (ele.Name.ToString().Contains("return"))
+                {
+                    CommentList.Items.Add(comment + "\t" + ele.Value);
+                }
+            }
         }
         async private void do_my_desc(string id)
         {
-            HttpClient httpClient = new HttpClient();
-
-            httpClient.DefaultRequestHeaders.Accept.TryParseAdd("text/xml");
-            HttpContent content = new StringContent("", Encoding.UTF8, "text/xml");
-
-            //var Response = await httpClient.GetAsync(new Uri("http://163.5.84.202/UpReal/services/ProductManager/getSpecification?id_product=" + id + "&field_name=Description"));
-            var Response = await httpClient.GetAsync(new Uri("http://10.224.9.202/UpReal/services/ProductUtilManager/getSpecification?id_product=" + id + "&field_name=Description"));
-
-            var statusCode = Response.StatusCode;
-
-            Response.EnsureSuccessStatusCode();
-            var ResponseText = await Response.Content.ReadAsStringAsync();
-            XElement doc = XElement.Parse(ResponseText);
-
-            var query = doc.Descendants();
+            WebService web = new WebService();
+            var task = web.AskWebService("ProductUtilManager/getDescription?id_product=" + id);
+            await task;
+            var query = web.value.Descendants();
             foreach (XElement ele in query)
             {
                 if (ele.Name.ToString().Contains("field_desc"))
@@ -332,36 +295,39 @@ namespace LateralMenus
 
         async private void AimeButton_Click(object sender, RoutedEventArgs e)
         {
-            //try
-            //{
-                                  HttpClient httpClient = new HttpClient();
-
-            httpClient.DefaultRequestHeaders.Accept.TryParseAdd("text/xml");
-            HttpContent content = new StringContent("", Encoding.UTF8, "text/xml");
-
-            var Response = await httpClient.GetAsync(new Uri("http://10.224.9.202/UpReal/services/GlobalManager/likeSomething?id_user=" + "1" + "&id_target=" + id_product + "&id_target_type=2"));
-            //var Response = await httpClient.GetAsync(new Uri("http://163.5.84.202/UpReal/services/UserManager/connectAccount?username=popo&password=pipi"));
-
-            //(new Uri(url), content);
-            var statusCode = Response.StatusCode;
-
-            Response.EnsureSuccessStatusCode();
-            var ResponseText = await Response.Content.ReadAsStringAsync();
-            XElement doc = XElement.Parse(ResponseText);
-            if (Convert.ToBoolean(doc.Value) == true)
+            if (Utilisateur.isConnect == true)
             {
-                MessageBox.Show("Produit aimer");      
+                WebService web = new WebService();
+
+                var task = web.AskWebService("GlobalManager/likeSomething?id_user=" + "1" + "&id_target=" + id_product + "&id_target_type=2");
+                await task;
+                var query = web.value.Descendants();
+                foreach (XElement ele in query)
+                {
+                    if (ele.Name.ToString().Contains("return"))
+                    {
+                        if (Convert.ToBoolean(ele.Value) == true)
+                        {
+                            MessageBox.Show("Produit aimer");
+                        }
+                    }
+                  
+                }
             }
-            //}
-            //catch
-            //{
-            //    MessageBox.Show("Vous n'etes pas connecte");
-            //}
+            else
+            {
+                MessageBox.Show("Vous n'etes pas connecte");
+            }
         }
 
         private void Actualite_Click(object sender, RoutedEventArgs e)
         {
             NavigationService.Navigate(new Uri("/MainPage.xaml", UriKind.Relative));
+        }
+
+        private void CommentButton_Click(object sender, RoutedEventArgs e)
+        {
+            NavigationService.Navigate(new Uri("/Comment.xaml?msg=" + id_product, UriKind.Relative));
         }
 
     }

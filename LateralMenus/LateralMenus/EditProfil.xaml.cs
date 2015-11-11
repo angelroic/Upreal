@@ -198,18 +198,10 @@ namespace LateralMenus
 
         async private void Valider_Click(object sender, RoutedEventArgs e)
         {
-            HttpClient httpClient = new HttpClient();
-
-            httpClient.DefaultRequestHeaders.Accept.TryParseAdd("text/xml");
-            HttpContent content = new StringContent("", Encoding.UTF8, "text/xml");
-
-            var Response = await httpClient.GetAsync(new Uri("http://163.5.84.202/UpReal/services/UserManager/updateAccount?" + "id=" + Utilisateur.id + "&" + "firstname=" + PrenomBox.Text + "&" + "lastname=" + NomBox.Text + "&phone=" + TelBox.Text + "&id_adress=75"));
-            var statusCode = Response.StatusCode;
-
-            Response.EnsureSuccessStatusCode();
-            var ResponseText = await Response.Content.ReadAsStringAsync();
-            XElement doc = XElement.Parse(ResponseText);
-            if (Convert.ToBoolean(doc.Value) == true)
+            WebService web = new WebService();
+            var task = web.AskWebService("UserManager/updateAccount?" + "id=" + Utilisateur.id + "&" + "firstname=" + PrenomBox.Text + "&" + "lastname=" + NomBox.Text + "&phone=" + TelBox.Text + "&id_adress=75");
+            await task;
+            if (Convert.ToBoolean(web.value) == true)
             {
                 MessageBox.Show("Changement reussi");
                 Utilisateur.city = VilleBox.Text;

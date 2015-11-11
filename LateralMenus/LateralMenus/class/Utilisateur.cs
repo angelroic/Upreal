@@ -3,12 +3,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.IO.IsolatedStorage;
 
 namespace LateralMenus
 {
     public static class Utilisateur
     {
+        public static IsolatedStorageSettings appSettings = IsolatedStorageSettings.ApplicationSettings;
         public static Boolean isConnect = false;
+        internal static Dictionary<string, List<string>> myList = new Dictionary<string, List<string>>();
         public static string username { get; set; } 
         public static string email { get; set; }
         public static string password { get; set; }
@@ -20,19 +23,7 @@ namespace LateralMenus
         public static string city { get; set; }
         public static string name { get; set; }
         public static bool telcheck { get; set; }
-        //public Utilisateur()
-        //{
-        //    username = "";
-        //    email = "";
-        //    password = "";
-        //    firstname = "";
-        //    secondname = "";
-        //    tel = 0;
-        //    city = "";
-        //    name = "";
-        //    id = 0;
-        //    telcheck = true;
-        //}
+
         
     }
 }

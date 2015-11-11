@@ -1,5 +1,5 @@
 ﻿<phone:PhoneApplicationPage
-    x:Class="LateralMenus.NewPage"
+    x:Class="LateralMenus.Comment"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
@@ -12,6 +12,7 @@
     SupportedOrientations="Portrait" Orientation="Portrait"
     mc:Ignorable="d"
     shell:SystemTray.IsVisible="True">
+
     <Canvas x:Name="canvas" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Height="800" Background="Black" ManipulationStarted="canvas_ManipulationStarted" ManipulationDelta="canvas_ManipulationDelta" ManipulationCompleted="canvas_ManipulationCompleted">
         <Canvas.Resources>
             <Storyboard x:Name="moveAnimation">
@@ -68,10 +69,11 @@
                 <Grid Grid.Row="0" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Background="#FF3B5998">
                     <Button  Click="OpenClose_Left" Content="" HorizontalAlignment="Left" VerticalAlignment="Top" Width="80" Height="80"/>
                     <Button  Click="OpenClose_Right" Content="" HorizontalAlignment="Right" VerticalAlignment="Top" Width="80" Height="80"/>
-                    <TextBlock x:Name="Title" HorizontalAlignment="Left" Margin="190,23,0,0" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Top"/>
                 </Grid>
-                <Image x:Name="ImageNew" HorizontalAlignment="Left" Stretch="Fill" Height="240" Margin="0,5,0,0" Grid.Row="1" VerticalAlignment="Top" Width="480" />
-                <TextBlock x:Name="DescNew" HorizontalAlignment="Left" Margin="10,268,0,0" Grid.Row="1" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Top"/>
+                <TextBlock HorizontalAlignment="Left" Margin="148,23,0,0" TextWrapping="Wrap" Text="Ajout de commentaire" VerticalAlignment="Top"/>
+                <Button Content="Annuler" HorizontalAlignment="Left" Margin="24,623,0,0" Grid.Row="1" VerticalAlignment="Top" RenderTransformOrigin="0.097,0.502" Width="226" Click="Annuler_Click"/>
+                <Button Content="Envoyer" HorizontalAlignment="Left" Margin="234,623,0,0" Grid.Row="1" VerticalAlignment="Top" Width="236" Click="Envoyer_Click"/>
+                <TextBox x:Name="CommentText" HorizontalAlignment="Left" Height="586" Margin="0,37,0,0" Grid.Row="1" TextWrapping="Wrap" VerticalAlignment="Top" Width="480"/>
             </Grid>
         </Canvas>
     </Canvas>

@@ -26,7 +26,7 @@ using System.IO.IsolatedStorage;
 
 namespace LateralMenus
 {
-     
+
     public partial class MainPage : PhoneApplicationPage
     {
         // Constructor
@@ -36,6 +36,12 @@ namespace LateralMenus
 
             InitializeComponent();
             VisualStateManager.GoToState(this, "Normal", false);
+            do_my_new();
+            if (Utilisateur.appSettings.Contains("connect") == true)
+            {
+                do_my_uti_class();
+                do_my_history();
+            } 
             if (Utilisateur.isConnect == false)
             {
                 ConnexionButton.Content = "Connexion";
@@ -44,79 +50,64 @@ namespace LateralMenus
             {
                 ConnexionButton.Content = "Mon profil";
             }
-            do_my_new();
-            do_my_history();
         }
-        
-       private void complettype()
+        private void do_my_uti_class()
         {
-            dtype.Add("1", "a consulte");
-            dtype.Add("2", "a aimer");
-            dtype.Add("3", "a pas aimer");
-            dtype.Add("4", "n'aime plus");
-            dtype.Add("5", "a partager");
-            dtype.Add("6", "a commenter");
-            dtype.Add("7", "a modifier son profil");
-            dtype.Add("8", "a ajouter un produit");
+            Utilisateur.id = (int)Utilisateur.appSettings["id"];
+            Utilisateur.name = Utilisateur.appSettings["name"].ToString();
+            Utilisateur.username = Utilisateur.appSettings["username"].ToString();
+            Utilisateur.isConnect = true;
+        }
+        private void complettype()
+        {
+            dtype.Add("1", Utilisateur.name + "a consulte");
+            dtype.Add("2", Utilisateur.name + "a aimer");
+            dtype.Add("3", Utilisateur.name + "a pas aimer");
+            dtype.Add("4", Utilisateur.name + "n'aime plus");
+            dtype.Add("5", Utilisateur.name + "a partager");
+            dtype.Add("6", Utilisateur.name + "a commenter");
+            dtype.Add("7", Utilisateur.name + "a modifier son profil");
+            dtype.Add("8", Utilisateur.name + "a ajouter un produit");
         }
         async private void do_my_history()
         {
-            //if (Utilisateur.isConnect == true)
-            //{
-         
-               complettype();
-                HttpClient httpClient = new HttpClient();
+            if (Utilisateur.isConnect == true)
+            {
+                complettype();
                 List<New> lnew = new List<New>();
-                httpClient.DefaultRequestHeaders.Accept.TryParseAdd("text/xml");
-                HttpContent content = new StringContent("", Encoding.UTF8, "text/xml");
 
-                       // var Response = await httpClient.GetAsync(new Uri("http://163.5.84.202//UpReal/services/UserUtilManager/getUserHistory?id_user=1"));
-                   var Response = await httpClient.GetAsync(new Uri("http://10.224.9.202//UpReal/services/UserUtilManager/getUserHistory?id_user=1"));
-
-                var statusCode = Response.StatusCode;
-
-                Response.EnsureSuccessStatusCode();
-                var ResponseText = await Response.Content.ReadAsStringAsync();
-                XElement doc = XElement.Parse(ResponseText);
-                var query = doc.Descendants();
+                WebService web = new WebService();
+                var task = web.AskWebService("UserUtilManager/getUserHistory?id_user=" + Utilisateur.id);
+                await task;
+                var query = web.value.Descendants();
                 foreach (XElement ele in query)
                 {
                     if (ele.Name.ToString().Contains("action_type"))
                     {
-                        HistoryList.Items.Add(dtype[ele.Value.ToString()]);
+                        HistoryList.Items.Add(Utilisateur.name + " " + dtype[ele.Value.ToString()]);
                     }
                 }
-            //}
-            ////else
-            //{
-            //    MessageBox.Show("Vous n'etes pas connecte");
-            //}
+            }
+            else
+            {
+                MessageBox.Show("Vous n'etes pas connecte");
+            }
         }
-        async private void do_my_new()
+         async private void do_my_new()
         {
-            HttpClient httpClient = new HttpClient();
             string tempo = "";
             string id_tempo = "";
             List<New> lnew = new List<New>();
-            httpClient.DefaultRequestHeaders.Accept.TryParseAdd("text/xml");
-            HttpContent content = new StringContent("", Encoding.UTF8, "text/xml");
-
-           var Response = await httpClient.GetAsync(new Uri("http://10.224.9.202//UpReal/services/GlobalManager/getNews"));
-         //   var Response = await httpClient.GetAsync(new Uri("http://163.5.84.202//UpReal/services/GlobalManager/getNews"));
-          
-            var statusCode = Response.StatusCode;
-
-            Response.EnsureSuccessStatusCode();
-            var ResponseText = await Response.Content.ReadAsStringAsync();
-            XElement doc = XElement.Parse(ResponseText);
-            var query = doc.Descendants();
+            WebService web = new WebService();
+            var task =  web.AskWebService("GlobalManager/getNews");
+            await task;
+            var query = web.value.Descendants();
             foreach (XElement ele in query)
             {
                 if (ele.Name.ToString().Contains("title"))
                 {
-                    New p = new New() { titleNew = ele.Value, imageNew = "http://10.224.9.202/Symfony/web/images/News/" + tempo, id = id_tempo };
+                    New p = new New() { titleNew = ele.Value, imageNew =  Img.ecole + "News/" + tempo, id = id_tempo };
                     lnew.Add(p);
-
                 }
                 if (ele.Name.ToString().Contains("picture"))
                 {
@@ -128,7 +119,6 @@ namespace LateralMenus
                 }
             }
             listNews.DataContext = lnew;
-
         }
 
 

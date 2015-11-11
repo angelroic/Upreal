@@ -203,6 +203,9 @@ namespace LateralMenus
         private void DeconnecterButton_Click(object sender, RoutedEventArgs e)
         {
             Utilisateur.isConnect = false;
+            Utilisateur.appSettings.Clear();
+            Utilisateur.appSettings.Save();
+            NavigationService.Navigate(new Uri("/MainPage.xaml", UriKind.Relative));
         }
 
         private void EditProfil_Click(object sender, RoutedEventArgs e)
@@ -212,7 +215,7 @@ namespace LateralMenus
 
         private void ChangePassword_Click(object sender, RoutedEventArgs e)
         {
-
+            NavigationService.Navigate(new Uri("/ChangePassword.xaml", UriKind.Relative));
         }
 
         private void Actualite_Click(object sender, RoutedEventArgs e)
