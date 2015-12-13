@@ -29,11 +29,6 @@
                         <Button Content="Scan" HorizontalAlignment="Left" Margin="-13,0,-10,0" VerticalAlignment="Top" Width="423" Click="MyScan_Click"/>
                         <Button Content="Mes listes" HorizontalAlignment="Left" Margin="-13,51,-10,0" VerticalAlignment="Top" Width="423" Click="MyListe_Click"/>
                         <Button Content="Actualite" HorizontalAlignment="Left" Margin="-13,123,-10,0" VerticalAlignment="Top" Width="423" Click="Actualite_Click"/>
-                        <Button Content="Catalogues" HorizontalAlignment="Left" Margin="-13,171,-10,0" VerticalAlignment="Top" RenderTransformOrigin="0.617,0.403" Width="423"/>
-                        <Button Content="Magasins" HorizontalAlignment="Left" Margin="-13,221,-10,0" VerticalAlignment="Top" Width="423"/>
-                        <Button Content="Carte de fidelite" HorizontalAlignment="Left" Margin="-13,298,-10,0" VerticalAlignment="Top" Width="423" Click="CarteFidel_Click"/>
-                        <Button Content="Bons Plans" HorizontalAlignment="Left" Margin="-13,348,-10,0" VerticalAlignment="Top" Width="423"/>
-                        <Button Content="Mes Filleuls" HorizontalAlignment="Left" Margin="-13,394,-10,0" VerticalAlignment="Top" RenderTransformOrigin="-0.542,-0.417" Width="423"/>
                         <Button Content="Succes" HorizontalAlignment="Left" Margin="-13,443,-10,0" VerticalAlignment="Top" Width="423"/>
                         <Button Content="Parametre" HorizontalAlignment="Left" Margin="-13,571,-10,0" VerticalAlignment="Top" Width="423" Click="Parametre_Click"/>
                     </Grid>
@@ -76,7 +71,6 @@
                 <Image x:Name="ImageStore" HorizontalAlignment="Left" Height="170" Margin="10,10,0,0" Grid.Row="1" VerticalAlignment="Top" Width="171" RenderTransformOrigin="0.14,0.37"/>
                 <TextBlock x:Name="NomStore" HorizontalAlignment="Left" Margin="186,45,0,0" Grid.Row="1" TextWrapping="Wrap" Text="nom produit" VerticalAlignment="Top"/>
                 <TextBlock x:Name="CateText" HorizontalAlignment="Left" Margin="186,77,0,0" Grid.Row="1" TextWrapping="Wrap" Text="Categorie" VerticalAlignment="Top"/>
-                <TextBlock x:Name="desc" HorizontalAlignment="Left" Margin="186,109,0,0" Grid.Row="1" TextWrapping="Wrap" Text="description" VerticalAlignment="Top"/>
                 <phone:Pivot HorizontalAlignment="Left" Height="520" Margin="0,201,0,0" Grid.Row="1" Title="" VerticalAlignment="Top" Width="480">
                     <phone:PivotItem CacheMode="{x:Null}" Header="Commentaire">
                         <Grid>
@@ -87,22 +81,23 @@
                         <Grid>
                             <Button x:Name="SuivreButton" Content="Aimer" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="221" Height="180" Click="AimeButton_Click"/>
                             <Button x:Name="CommentButton" Content="Commentaire" HorizontalAlignment="Left" Margin="217,10,0,0" VerticalAlignment="Top" Height="180" Width="239"/>
-                            <Button x:Name="PartagerButton" Content="Produit Similaire" HorizontalAlignment="Left" Margin="10,170,0,0" VerticalAlignment="Top" Height="185"/>
-                            <Button x:Name="SignalerButton" Content="Partager" HorizontalAlignment="Left" Margin="217,170,0,0" VerticalAlignment="Top" Width="239" Height="185"/>
-
+                            <Button x:Name="SignalerButton" Content="Partager" HorizontalAlignment="Left" Margin="105,174,0,0" VerticalAlignment="Top" Width="239" Height="185"/>
                         </Grid>
                     </phone:PivotItem>
-                    <phone:PivotItem CacheMode="{x:Null}" Header="Option">
-                        <Grid>
-                            <!--<Button x:Name="EditerButton" Content="Editer" HorizontalAlignment="Left" Margin="0,25,0,0" VerticalAlignment="Top" Height="174" Width="222"/>
-                            <Button x:Name="AjoutListButton" Content="Ajouter dans une liste" HorizontalAlignment="Left" Margin="204,25,0,0" VerticalAlignment="Top" Width="252" Height="174"/>
-                            <Button x:Name="TrocButton" Content="Mettre a troquer" HorizontalAlignment="Left" Margin="0,179,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.036,-0.472" Height="183"/>
-                            <Button x:Name="InfoButton" Content="Plus d'info" HorizontalAlignment="Left" Margin="204,179,0,0" VerticalAlignment="Top" Height="183" Width="252"/>-->
-
-                        </Grid>
+                    <phone:PivotItem CacheMode="{x:Null}" Header="Produit">
+                        <phone:LongListSelector x:Name="ProductList" HorizontalAlignment="Left" Height="388" Margin="0,0,0,286" Width="456" ItemsSource="{Binding}">
+                            <phone:LongListSelector.ItemTemplate>
+                                <DataTemplate>
+                                    <StackPanel>
+                                    <TextBlock Text="{Binding name}"/>
+                                    <TextBlock Text="{Binding price}"/>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </phone:LongListSelector.ItemTemplate>
+                        </phone:LongListSelector>
                     </phone:PivotItem>
                 </phone:Pivot>
-                <Button Content="Localise-moi" HorizontalAlignment="Left" Margin="164,129,0,0" Grid.Row="1" VerticalAlignment="Top"/>
+                <Button Content="Localise-moi" HorizontalAlignment="Left" Margin="168,104,0,0" Grid.Row="1" VerticalAlignment="Top"/>
 
 
             </Grid>

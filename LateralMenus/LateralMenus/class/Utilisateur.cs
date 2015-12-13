@@ -11,7 +11,7 @@ namespace LateralMenus
     {
         public static IsolatedStorageSettings appSettings = IsolatedStorageSettings.ApplicationSettings;
         public static Boolean isConnect = false;
-        internal static Dictionary<string, List<string>> myList = new Dictionary<string, List<string>>();
+        internal static Dictionary<list, List<string>> myList = new Dictionary<list, List<string>>();
         public static string username { get; set; } 
         public static string email { get; set; }
         public static string password { get; set; }
@@ -24,6 +24,5 @@ namespace LateralMenus
         public static string name { get; set; }
         public static bool telcheck { get; set; }
 
-        
     }
 }

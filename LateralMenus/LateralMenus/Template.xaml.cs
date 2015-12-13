@@ -26,6 +26,15 @@ namespace LateralMenus
         public Template()
         {
             InitializeComponent();
+            VisualStateManager.GoToState(this, "Normal", false);
+            if (Utilisateur.isConnect == false)
+            {
+                ConnexionButton.Content = "Connexion";
+            }
+            else
+            {
+                ConnexionButton.Content = "Mon profil";
+            }
         }
         private void OpenClose_Left(object sender, RoutedEventArgs e)
         {

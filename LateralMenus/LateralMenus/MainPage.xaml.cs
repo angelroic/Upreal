@@ -34,22 +34,30 @@ namespace LateralMenus
         public MainPage()
         {
 
-            InitializeComponent();
-            VisualStateManager.GoToState(this, "Normal", false);
-            do_my_new();
-            if (Utilisateur.appSettings.Contains("connect") == true)
+            try
             {
-                do_my_uti_class();
-                do_my_history();
-            } 
-            if (Utilisateur.isConnect == false)
-            {
-                ConnexionButton.Content = "Connexion";
+                InitializeComponent();
+                VisualStateManager.GoToState(this, "Normal", false);
+                if (Utilisateur.isConnect == false)
+                {
+                    ConnexionButton.Content = "Connexion";
+                }
+                else
+                {
+                    ConnexionButton.Content = "Mon profil";
+                }
+                do_my_new();
+                if (Utilisateur.appSettings.Contains("connect") == true)
+                {
+                    do_my_uti_class();
+                    do_my_history();
+                }
             }
-            else
+            catch
             {
-                ConnexionButton.Content = "Mon profil";
+                MessageBox.Show("Veuillez avoir une connection internet");
             }
+
         }
         private void do_my_uti_class()
         {

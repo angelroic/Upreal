@@ -30,12 +30,7 @@
                         <Button Content="Scan" HorizontalAlignment="Left" Margin="-13,0,-10,0" VerticalAlignment="Top" Width="423" Click="MyScan_Click"/>
                         <Button Content="Mes listes" HorizontalAlignment="Left" Margin="-13,51,-10,0" VerticalAlignment="Top" Width="423" Click="MyListe_Click"/>
                         <Button Content="Actualite" HorizontalAlignment="Left" Margin="-13,123,-10,0" VerticalAlignment="Top" Width="423" Click="Actualite_Click"/>
-                        <Button Content="Catalogues" HorizontalAlignment="Left" Margin="-13,171,-10,0" VerticalAlignment="Top" RenderTransformOrigin="0.617,0.403" Width="423"/>
-                        <Button Content="Magasins" HorizontalAlignment="Left" Margin="-13,221,-10,0" VerticalAlignment="Top" Width="423"/>
-                        <Button Content="Carte de fidelite" HorizontalAlignment="Left" Margin="-13,298,-10,0" VerticalAlignment="Top" Width="423" Click="CarteFidel_Click"/>
-                        <Button Content="Bons Plans" HorizontalAlignment="Left" Margin="-13,348,-10,0" VerticalAlignment="Top" Width="423"/>
-                        <Button Content="Mes Filleuls" HorizontalAlignment="Left" Margin="-13,394,-10,0" VerticalAlignment="Top" RenderTransformOrigin="-0.542,-0.417" Width="423"/>
-                        <Button Content="Succes" HorizontalAlignment="Left" Margin="-13,443,-10,0" VerticalAlignment="Top" Width="423"/>
+                                   <Button Content="Succes" HorizontalAlignment="Left" Margin="-13,443,-10,0" VerticalAlignment="Top" Width="423"/>
                         <Button Content="Parametre" HorizontalAlignment="Left" Margin="-13,571,-10,0" VerticalAlignment="Top" Width="423" Click="Parametre_Click"/>
                     </Grid>
 

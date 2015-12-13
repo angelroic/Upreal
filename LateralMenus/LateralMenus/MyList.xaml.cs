@@ -206,17 +206,51 @@ namespace LateralMenus
             NavigationService.Navigate(new Uri("/MainPage.xaml", UriKind.Relative));
         }
 
-        private void AjouterListButton_Click(object sender, RoutedEventArgs e)
+        async private void AjouterListButton_Click(object sender, RoutedEventArgs e)
         {
-
-            //Utilisateur.List;
+            if (TextBoxList.Text != "")
+            {
+                WebService web = new WebService();
+                var task = web.AskWebService("GlobalManager/createLists?name=" + TextBoxList.Text + "&publics=1" + "&type=8" + "&nb_items=0"+  "&id_user=" + Utilisateur.id);
+                await task;
+                var query = web.value.Descendants();
+                foreach (XElement ele in query)
+                {
+                    if (ele.Name.ToString().Contains("return"))
+                    {
+                        list l = new list();
+                        l.id = Convert.ToInt32(ele.Value);
+                        l.name = TextBoxList.Text;
+                        l.publics = 1;
+                        l.type = 8;
+                        l.nb_items = 0;
+                        List<string> t = new List<string>();
+                        Utilisateur.myList.Add(l, t);
+                        ListItem.Items.Add(l.name);
+                    }
+                }
+            }
+            else
+            {
+                MessageBox.Show("veuillez choisir un nom de liste");
+            }
         }
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
-            foreach (string key in Utilisateur.myList.Keys)
+            foreach (list key in Utilisateur.myList.Keys)
             {
-                ListItem.Items.Add(key);
+                ListItem.Items.Add(key.name);
             }
+        }
+
+        private void ListItem_DoubleTap(object sender, GestureEventArgs e)
+        {
+            NavigationService.Navigate(new Uri("/ListContent.xaml?msg=" + ListItem.SelectedItem, UriKind.Relative));
+        }
+
+        private void TextBoxList_TextChanged(object sender, TextChangedEventArgs e)
+        {
+
         }
 
     }

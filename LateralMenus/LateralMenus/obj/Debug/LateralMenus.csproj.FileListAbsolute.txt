@@ -184,3 +184,6 @@ C:\Users\roic\Documents\GitHub\Upreal\LateralMenus\LateralMenus\obj\Debug\Latera
 C:\Users\roic\Documents\GitHub\Upreal\LateralMenus\LateralMenus\obj\Debug\LateralMenus.pdb
 C:\Users\roic\Documents\GitHub\Upreal\LateralMenus\LateralMenus\obj\Debug\XapCacheFile.xml
 C:\Users\roic\Documents\GitHub\Upreal\LateralMenus\LateralMenus\obj\Debug\Comment.g.cs
+C:\Users\roic\Documents\GitHub\Upreal\LateralMenus\LateralMenus\obj\Debug\ListContent.g.cs
+C:\Users\roic\Documents\GitHub\Upreal\LateralMenus\LateralMenus\obj\Debug\AddToList.g.cs
+C:\Users\roic\Documents\GitHub\Upreal\LateralMenus\LateralMenus\obj\Debug\NewPage.g.cs

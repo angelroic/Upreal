@@ -20,12 +20,15 @@ using System.Xml.Schema;
 using System.IO;
 using System.Windows.Media.Imaging;
 using System.Windows.Media;
+using System.Collections.ObjectModel;
+using System.Threading.Tasks;
 
 namespace LateralMenus
 {
     public partial class StoreProfil : PhoneApplicationPage
     {
         string item_name = "";
+        string tmp = "";
         public StoreProfil()
         {
             InitializeComponent();
@@ -35,21 +38,10 @@ namespace LateralMenus
             base.OnNavigatedTo(e);
             if (NavigationContext.QueryString.TryGetValue("msg", out item_name))
             {
-                HttpClient httpClient = new HttpClient();
-
-                httpClient.DefaultRequestHeaders.Accept.TryParseAdd("text/xml");
-                HttpContent content = new StringContent("", Encoding.UTF8, "text/xml");
-
-                //var Response = await httpClient.GetAsync(new Uri("http://163.5.84.202/UpReal/services/StoreManager/getProductByName?keyword=" + item_name));
-                var Response = await httpClient.GetAsync(new Uri("http://10.224.9.202/UpReal/services/StoreManager/getStoreByName?keyword=" + item_name));
-
-                var statusCode = Response.StatusCode;
-
-                Response.EnsureSuccessStatusCode();
-                var ResponseText = await Response.Content.ReadAsStringAsync();
-                XElement doc = XElement.Parse(ResponseText);
-
-                var query = doc.Descendants();
+                WebService web = new WebService();
+                var task = web.AskWebService("StoreManager/getStoreByName?keyword=" + item_name);
+                await task;
+                var query = web.value.Descendants();
                 foreach (XElement ele in query)
                 {
                     if (ele.Name.ToString().Contains("name"))
@@ -62,10 +54,53 @@ namespace LateralMenus
                     }
                     else if (ele.Name.ToString().Contains("picture"))
                     {
-                        ImageStore.Source = new BitmapImage(new Uri("http://10.224.9.202/Symfony/web/images/store/" + ele.Value, UriKind.Absolute));
+                        ImageStore.Source = new BitmapImage(new Uri(Img.ecole + "Store/" + ele.Value, UriKind.Absolute));
                     }
-                };
+                    else if (ele.Name.ToString().Contains("id") && !ele.Name.ToString().Contains("address") && !ele.Name.ToString().Contains("company"))
+                    {
+                        get_product(ele.Value);
+                    }
+                }
             }
+        }
+        async private void get_product(string id)
+        {
+            WebService web = new WebService();
+          
+            var task = web.AskWebService("ProductUtilManager/getProductByStore?id=" + id);
+            await task;
+            var query = web.value.Descendants();
+            ObservableCollection<Item> Product = new ObservableCollection<Item>();
+            
+            foreach (XElement ele in query)
+            {
+                if (ele.Name.ToString().Contains("id_product"))
+                {
+                     var i = find_product_name(ele.Value);
+                     await i;
+                }
+                if (ele.Name.ToString().Contains("price"))
+                {
+                    Product.Add(new Item() { name = tmp, price = ele.Value});
+                }
+            }
+            ProductList.ItemsSource = Product;
+        }
+
+        async private Task<int> find_product_name(string id)
+        {
+            WebService web = new WebService();
+            var task= web.AskWebService("ProductManager/getProductInfo?id=" + id);
+            await task;
+            var query = web.value.Descendants();
+            foreach (XElement ele in query)
+            {
+                if (ele.Name.ToString().Contains("name"))
+                {
+                    tmp = ele.Value;
+                }
+            }
+            return 1;
         }
         private void OpenClose_Left(object sender, RoutedEventArgs e)
         {

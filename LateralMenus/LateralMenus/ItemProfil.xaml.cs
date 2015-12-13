@@ -28,6 +28,7 @@ namespace LateralMenus
     {
         string item_name = "";
         string id_product = "";
+        string id_item = "";
 
         public ItemProfil()
         {
@@ -62,7 +63,7 @@ namespace LateralMenus
                         do_my_desc(ele.Value);
                         do_my_comment(ele.Value);
                     }
-                };
+                }
 
             }
 
@@ -86,6 +87,7 @@ namespace LateralMenus
                 {
                     if (tempo != "")
                     {
+                        id_item = id;
                         do_rate_comment(ele.Value, id, tempo);
                     }
                 }
@@ -106,18 +108,49 @@ namespace LateralMenus
                 }
             }
         }
-        async private void do_my_desc(string id)
+
+        async private void ShareButton_Click(object sender, RoutedEventArgs e)
         {
             WebService web = new WebService();
-            var task = web.AskWebService("ProductUtilManager/getDescription?id_product=" + id);
+            var task = web.AskWebService("UserUtilManager/createHistory?id_user=" + Utilisateur.id + "&action_type=5" + "&id_type=2" + "&id_target=" + id_item);
             await task;
             var query = web.value.Descendants();
             foreach (XElement ele in query)
             {
-                if (ele.Name.ToString().Contains("field_desc"))
+                if (ele.Name.ToString().Contains("return"))
                 {
-                    desc.Text = ele.Value;
+                    if (Convert.ToInt32(ele.Value) > 0)
+                    {
+                        MessageBox.Show(ele.Value);
+                    }
+
                 }
+            }
+        }
+        async private void do_my_desc(string id)
+        {
+            WebService web = new WebService();
+            var task = web.AskWebService("ProductUtilManager/getSpecification?id_product=" + id);
+            await task;
+            var query = web.value.Descendants();
+            int l = 0;
+            try
+            {
+                foreach (XElement ele in query)
+                {
+                    if (ele.Name.ToString().Contains("type"))
+                    {
+                        l =Convert.ToInt32(ele.Value);
+                    }
+                    if (l == 0 && ele.Name.ToString().Contains("value"))
+                    {
+                        desc.Text = ele.Value;
+                    }
+                }
+            }
+            catch
+            {
+                desc.Text = "";
             }
         }
 
@@ -311,7 +344,7 @@ namespace LateralMenus
                             MessageBox.Show("Produit aimer");
                         }
                     }
-                  
+
                 }
             }
             else
@@ -328,6 +361,11 @@ namespace LateralMenus
         private void CommentButton_Click(object sender, RoutedEventArgs e)
         {
             NavigationService.Navigate(new Uri("/Comment.xaml?msg=" + id_product, UriKind.Relative));
+        }
+
+        private void AjoutListButton_Click(object sender, RoutedEventArgs e)
+        {
+            NavigationService.Navigate(new Uri("/AddToList.xaml?msg=" + id_product, UriKind.Relative));
         }
 
     }

@@ -12,7 +12,6 @@ namespace LateralMenus
     {
         public string name { get; set; }
         public string imagePath { get; set; }
-   
-
+        public string price { get; set; }
     }
 }

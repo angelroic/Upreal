@@ -183,7 +183,7 @@ namespace LateralMenus
                 if (ele.Name.ToString().Contains("id") && ele.Name.ToString().Contains("id_user") == false)
                 {                 
                     listInfo.id = Convert.ToInt32(ele.Value);
-                    var t =complet_list(Convert.ToInt32(ele.Value));
+                    var t = complet_list(Convert.ToInt32(ele.Value));
                     await t;
                 }
                 if (ele.Name.ToString().Contains("name"))
@@ -201,7 +201,8 @@ namespace LateralMenus
                 if (ele.Name.ToString().Contains("type"))
                 {
                     listInfo.type = Convert.ToInt32(ele.Value);
-                    Utilisateur.myList.Add(listInfo.name, ListValue);
+                    Utilisateur.myList.Add(listInfo, ListValue);
+                    ListValue = new List<string>();
                     listInfo = new list();
                 }
             }
@@ -310,17 +311,26 @@ namespace LateralMenus
 
             var task = web.AskWebService("UserManager/registerAccount?" + "username=" + NameBox.Text + "&" + "password=" + PasswordBox.Text + "&" + "email=" + EmailBox.Text);
             await task;
-            if (Convert.ToInt32(web.value) == -1)
+            var query = web.value.Descendants();
+            foreach (XElement ele in query)
             {
-                MessageBox.Show("Username deja utilise");
-            }
-            else if (Convert.ToInt32(web.value) == -2)
-            {
-                MessageBox.Show("Email deja utilise");
-            }
-            else
-            {
-                MessageBox.Show("Inscription reusi");
+
+                if (ele.Name.ToString().Contains("return"))
+                {
+                    if (Convert.ToInt32(ele.Value) == -1)
+                    {
+                        MessageBox.Show("Username deja utilise");
+                    }
+                    else if (Convert.ToInt32(ele.Value) == -2)
+                    {
+                        MessageBox.Show("Email deja utilise");
+                    }
+                    else
+                    {
+                        MessageBox.Show(ele.Value);
+                        MessageBox.Show("Inscription reusi");
+                    }
+                }
             }
         }
         private void RankButton1_Click(object sender, RoutedEventArgs e)

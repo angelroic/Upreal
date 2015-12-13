@@ -37,7 +37,7 @@ namespace LateralMenus
             List<New> lnew = new List<New>();
             httpClient.DefaultRequestHeaders.Accept.TryParseAdd("text/xml");
             HttpContent content = new StringContent("", Encoding.UTF8, "text/xml");
-            var Response = await httpClient.GetAsync(new Uri(ecole + web));
+            var Response = await httpClient.GetAsync(new Uri(ecole  + web));
             var statusCode = Response.StatusCode;
             Response.EnsureSuccessStatusCode();
             var ResponseText = await Response.Content.ReadAsStringAsync();

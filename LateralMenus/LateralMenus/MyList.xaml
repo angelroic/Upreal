@@ -29,12 +29,7 @@
                         <Button Content="Scan" HorizontalAlignment="Left" Margin="-13,0,-10,0" VerticalAlignment="Top" Width="423" Click="MyScan_Click"/>
                         <Button Content="Mes listes" HorizontalAlignment="Left" Margin="-13,51,-10,0" VerticalAlignment="Top" Width="423"/>
                         <Button Content="Actualite" HorizontalAlignment="Left" Margin="-13,123,-10,0" VerticalAlignment="Top" Width="423" Click="Actualite_Click"/>
-                        <Button Content="Catalogues" HorizontalAlignment="Left" Margin="-13,171,-10,0" VerticalAlignment="Top" RenderTransformOrigin="0.617,0.403" Width="423"/>
-                        <Button Content="Magasins" HorizontalAlignment="Left" Margin="-13,221,-10,0" VerticalAlignment="Top" Width="423"/>
-                        <Button Content="Carte de fidelite" HorizontalAlignment="Left" Margin="-13,298,-10,0" VerticalAlignment="Top" Width="423" Click="CarteFidel_Click"/>
-                        <Button Content="Bons Plans" HorizontalAlignment="Left" Margin="-13,348,-10,0" VerticalAlignment="Top" Width="423"/>
-                        <Button Content="Mes Filleuls" HorizontalAlignment="Left" Margin="-13,394,-10,0" VerticalAlignment="Top" RenderTransformOrigin="-0.542,-0.417" Width="423"/>
-                        <Button Content="Succes" HorizontalAlignment="Left" Margin="-13,443,-10,0" VerticalAlignment="Top" Width="423"/>
+                           <Button Content="Succes" HorizontalAlignment="Left" Margin="-13,443,-10,0" VerticalAlignment="Top" Width="423"/>
                         <Button Content="Parametre" HorizontalAlignment="Left" Margin="-13,571,-10,0" VerticalAlignment="Top" Width="423" Click="Parametre_Click"/>
                     </Grid>
 
@@ -74,15 +69,11 @@
                     <Button  Click="OpenClose_Right" Content="" HorizontalAlignment="Right" VerticalAlignment="Top" Width="80" Height="80"/>
                     <TextBlock HorizontalAlignment="Left" Margin="189,26,0,0" TextWrapping="Wrap" Text="Mes Listes" VerticalAlignment="Top"/>
                 </Grid>
-                <Button Content="Produit aimes" HorizontalAlignment="Left" Margin="-9,66,-11,0" VerticalAlignment="Top" Grid.RowSpan="2" Height="88" Width="500"/>
-                <Button Content="Utilisateur suivis" HorizontalAlignment="Left" Margin="-9,58,-11,0" Grid.Row="1" VerticalAlignment="Top" Height="80" Width="500"/>
-                <Button Content="Historique de produit consulte" HorizontalAlignment="Left" Margin="-9,117,-11,0" Grid.Row="1" VerticalAlignment="Top" Height="87" Width="500"/>
-                <Button Content="Mes commentaires" HorizontalAlignment="Left" Margin="-9,183,-11,0" Grid.Row="1" VerticalAlignment="Top" RenderTransformOrigin="-1.25,-0.361" Height="83" Width="500"/>
-                <Button Content="Ma liste de produit  a troquer" HorizontalAlignment="Left" Margin="-9,244,-11,0" Grid.Row="1" VerticalAlignment="Top" Height="83" Width="500"/>
-                <Rectangle Fill="#FFF4F4F5" HorizontalAlignment="Left" Height="43" Margin="0,316,0,0" Grid.Row="1" Stroke="Black" VerticalAlignment="Top" Width="480"/>
-                <TextBlock HorizontalAlignment="Left" Margin="139,316,0,0" Grid.Row="1" TextWrapping="Wrap" Text="Mes listes personalises" VerticalAlignment="Top" Foreground="#FF1E1717"/>
-                <ListBox Name="ListItem" HorizontalAlignment="Left" Height="281" Margin="10,364,0,0" Grid.Row="1" VerticalAlignment="Top" Width="470"/>
+                <Rectangle Fill="#FFF4F4F5" HorizontalAlignment="Left" Height="43" Margin="0,5,0,0" Grid.Row="1" Stroke="Black" VerticalAlignment="Top" Width="480"/>
+                <TextBlock HorizontalAlignment="Left" Margin="142,10,0,0" Grid.Row="1" TextWrapping="Wrap" Text="Mes listes personalises" VerticalAlignment="Top" Foreground="#FF1E1717"/>
+                <ListBox Name="ListItem" HorizontalAlignment="Left" Height="535" Margin="10,53,0,0" Grid.Row="1" VerticalAlignment="Top" Width="470" DoubleTap="ListItem_DoubleTap"/>
                 <Button Content="Ajouter une liste" HorizontalAlignment="Left" Margin="0,633,0,0" Grid.Row="1" VerticalAlignment="Top" Height="68" RenderTransformOrigin="0.55,-0.109" Width="480" Click="AjouterListButton_Click"/>
+                <TextBox x:Name="TextBoxList" HorizontalAlignment="Left" Height="72" Margin="0,587,0,0" Grid.Row="1" TextWrapping="Wrap" VerticalAlignment="Top" Width="480" TextChanged="TextBoxList_TextChanged"/>
 
             </Grid>
         </Canvas>
