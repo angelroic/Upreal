@@ -27,6 +27,7 @@ namespace LateralMenus
         public MyList()
         {
             InitializeComponent();
+           
         }
         private void OpenClose_Left(object sender, RoutedEventArgs e)
         {
@@ -126,57 +127,14 @@ namespace LateralMenus
                 NavigationService.Navigate(new Uri("/Profil.xaml", UriKind.Relative));
             }
         }
-        private void RankButton1_Click(object sender, RoutedEventArgs e)
-        {
-            RankButton1.IsChecked = true;
-            RankButton2.IsChecked = false;
-            RankButton3.IsChecked = false;
-            RankButton4.IsChecked = false;
-            RankButton5.IsChecked = false;
-        }
-
-        private void RankButton2_Click(object sender, RoutedEventArgs e)
-        {
-            RankButton1.IsChecked = false;
-            RankButton2.IsChecked = true;
-            RankButton3.IsChecked = false;
-            RankButton4.IsChecked = false;
-            RankButton5.IsChecked = false;
-        }
-
-        private void RankButton3_Click(object sender, RoutedEventArgs e)
-        {
-            RankButton1.IsChecked = false;
-            RankButton2.IsChecked = false;
-            RankButton3.IsChecked = true;
-            RankButton4.IsChecked = false;
-            RankButton5.IsChecked = false;
-        }
-
-        private void RankButton4_Click(object sender, RoutedEventArgs e)
-        {
-            RankButton1.IsChecked = false;
-            RankButton2.IsChecked = false;
-            RankButton3.IsChecked = false;
-            RankButton4.IsChecked = true;
-            RankButton5.IsChecked = false;
-        }
-
-        private void RankButton5_Click(object sender, RoutedEventArgs e)
-        {
-            RankButton1.IsChecked = false;
-            RankButton2.IsChecked = false;
-            RankButton3.IsChecked = false;
-            RankButton4.IsChecked = false;
-            RankButton5.IsChecked = true;
-        }
+      
 
         private void RechercheBox_GotFocus(object sender, RoutedEventArgs e)
         {
             RechercheBox.Text = "";
         }
 
-        private void MyListe_Click(object sender, RoutedEventArgs e)
+        private void MyList_Click(object sender, RoutedEventArgs e)
         {
             NavigationService.Navigate(new Uri("/MyList.xaml", UriKind.Relative));
         }
@@ -237,6 +195,7 @@ namespace LateralMenus
         }
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
+            ListItem.Items.Clear(); 
             foreach (list key in Utilisateur.myList.Keys)
             {
                 ListItem.Items.Add(key.name);

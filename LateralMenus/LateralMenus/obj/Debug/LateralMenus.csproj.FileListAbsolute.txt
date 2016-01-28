@@ -164,7 +164,6 @@ C:\Users\roic\Documents\GitHub\Upreal\LateralMenus\LateralMenus\Bin\Debug\zh-Han
 C:\Users\roic\Documents\GitHub\Upreal\LateralMenus\LateralMenus\Bin\Debug\zh-Hant\System.Windows.Interactivity.resources.dll
 C:\Users\roic\Documents\GitHub\Upreal\LateralMenus\LateralMenus\obj\Debug\LateralMenus.csprojResolveAssemblyReference.cache
 C:\Users\roic\Documents\GitHub\Upreal\LateralMenus\LateralMenus\obj\Debug\App.g.cs
-C:\Users\roic\Documents\GitHub\Upreal\LateralMenus\LateralMenus\obj\Debug\CarteFidel.g.cs
 C:\Users\roic\Documents\GitHub\Upreal\LateralMenus\LateralMenus\obj\Debug\ChangePassword.g.cs
 C:\Users\roic\Documents\GitHub\Upreal\LateralMenus\LateralMenus\obj\Debug\Connect.g.cs
 C:\Users\roic\Documents\GitHub\Upreal\LateralMenus\LateralMenus\obj\Debug\EditProfil.g.cs

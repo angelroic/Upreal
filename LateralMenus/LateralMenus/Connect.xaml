@@ -23,20 +23,17 @@
             <Border Width="420"  CacheMode="BitmapCache" Background="#FF31363E" Grid.Column="0" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Height="{Binding ActualHeight, ElementName=canvas}">
                 <Grid>
                     <Grid HorizontalAlignment="Left" Height="124" VerticalAlignment="Top" Width="400">
-                        <Button x:Name="ConnexionButton" Content="Connexion" HorizontalAlignment="Left" Margin="10,21,0,0" VerticalAlignment="Top" Width="380" Click="ConnexionButton_Click"/>
+                        <Button x:Name="ConnexionButton" Content="Connexion" HorizontalAlignment="Left"  Margin="20,10,0,0" VerticalAlignment="Top" Width="380" Click="ConnexionButton_Click" FontWeight="Bold"/>
                     </Grid>
                     <Grid HorizontalAlignment="Left" Height="661" Margin="10,124,0,0" VerticalAlignment="Top" Width="400">
-                        <Button Content="Scan" HorizontalAlignment="Left" Margin="-13,0,-10,0" VerticalAlignment="Top" Width="423" Click="MyScan_Click"/>
-                        <Button Content="Mes listes" HorizontalAlignment="Left" Margin="-13,51,-10,0" VerticalAlignment="Top" Width="423" Click="MyListe_Click"/>
-                        <Button Content="Succes" HorizontalAlignment="Left" Margin="-13,443,-10,0" VerticalAlignment="Top" Width="423"/>
-                        <Button Content="Parametre" HorizontalAlignment="Left" Margin="-13,571,-10,0" VerticalAlignment="Top" Width="423" Click="Parametre_Click"/>
+                        <Button Content="Scan" HorizontalAlignment="Left" Margin="-13,124,-10,0" VerticalAlignment="Top" Width="423" Click="MyScan_Click" Height="87"/>
+                        <Button Content="Mes listes" HorizontalAlignment="Left" Margin="-13,51,-10,0" VerticalAlignment="Top" Width="423" Click="MyList_Click" Height="88"/>
+                        <Button Content="Actualite" HorizontalAlignment="Left" Margin="-13,-21,-10,0" VerticalAlignment="Top" Width="423" Click="Actualite_Click" RenderTransformOrigin="0.515,0.167" Height="87"/>
+                        <Button Content="Parametre" HorizontalAlignment="Left" Margin="-13,196,-10,0" VerticalAlignment="Top" Width="423" Click="Parametre_Click"/>
                     </Grid>
-
                 </Grid>
-
-
             </Border>
-            <Border Width="420" Margin="900,0,0,0" CacheMode="BitmapCache" Background="#FF31363E" Grid.Column="2" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Height="{Binding ActualHeight, ElementName=canvas}">
+            <!--<Border Width="420" Margin="900,0,0,0" CacheMode="BitmapCache" Background="#FF31363E" Grid.Column="2" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Height="{Binding ActualHeight, ElementName=canvas}">
                 <Grid>
                     <Grid HorizontalAlignment="Left" Height="800" VerticalAlignment="Top" Width="420">
                         <TextBox x:Name="RechercheBox"  HorizontalAlignment="Left" Height="72" Margin="10,0,0,0" TextWrapping="Wrap" Text="produits,marque,magasin,utilisateur" VerticalAlignment="Top" Width="410"/>
@@ -49,15 +46,10 @@
 
                         </ListBox>
                         <Grid HorizontalAlignment="Left" Height="304" Margin="10,294,0,0" VerticalAlignment="Top" Width="405">
-                            <RadioButton x:Name="RankButton5" Content="5 etoiles" HorizontalAlignment="Left" VerticalAlignment="Top" Click="RankButton5_Click"/>
-                            <RadioButton x:Name="RankButton4" Content="4 etoiles" HorizontalAlignment="Left" Margin="0,54,0,0" VerticalAlignment="Top" Height="75" Click="RankButton4_Click"/>
-                            <RadioButton x:Name="RankButton3" Content="3 etoiles" HorizontalAlignment="Left" Margin="0,115,0,0" VerticalAlignment="Top" Click="RankButton3_Click"/>
-                            <RadioButton x:Name="RankButton2" Content="2 etoiles" HorizontalAlignment="Left" Margin="0,174,0,0" VerticalAlignment="Top" Click="RankButton2_Click"/>
-                            <RadioButton x:Name="RankButton1" Content="1 etoile" HorizontalAlignment="Left" Margin="0,232,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.43,-0.031" IsChecked="True" Click="RankButton1_Click"/>
-                        </Grid>
+                                             </Grid>
                     </Grid>
                 </Grid>
-            </Border>
+            </Border>-->
             <Grid x:Name="grdCommands" Margin="420,0,0,0" CacheMode="BitmapCache" Grid.Column="1" Background="#FFCFD4E2" Height="{Binding ActualHeight, ElementName=canvas}" Width="480" >
                 <Grid.RowDefinitions>
                     <RowDefinition Height="76"/>
@@ -65,41 +57,39 @@
                 </Grid.RowDefinitions>
                 <Grid Grid.Row="0" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Background="#FF3B5998">
                     <Button  Click="OpenClose_Left" Content="" HorizontalAlignment="Left" VerticalAlignment="Top" Width="80" Height="80"/>
-                    <Button  Click="OpenClose_Right" Content="" HorizontalAlignment="Right" VerticalAlignment="Top" Width="80" Height="80"/>
+                    <TextBox x:Name="RechercheBox" HorizontalAlignment="Left" Height="72" Margin="170,4,0,0" TextWrapping="Wrap" Text="Rechercher" VerticalAlignment="Top" Width="245" GotFocus="RechercheBox_GotFocus"/>
+                    <Button x:Name="SendRequestButton" HorizontalAlignment="Stretch" Margin="395,4,0,0" Click="SendRequestButton_Click" Content="&gt;"/>
                 </Grid>
                 <Border Grid.Row="1" Background="#FFCFD4E2">
                     <phone:Pivot  Margin="-10,0,10,10">
+                        <phone:Pivot.HeaderTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding}" Foreground="#0E4F91" />
+                            </DataTemplate>
+                        </phone:Pivot.HeaderTemplate>
                         <phone:PivotItem CacheMode="{x:Null}" Header="Inscription">
-                            <Grid>
-                                <TextBox x:Name="NameBox" HorizontalAlignment="Left" Height="72" Margin="0,0,-34,0" TextWrapping="Wrap" Text="Nom Utilisateur" VerticalAlignment="Top" Width="490" GotFocus="NameBox_GotFocus"/>
-                                <TextBox x:Name="PasswordBox" HorizontalAlignment="Left" Height="72" Margin="-4.478,67.522,-29.522,0" TextWrapping="Wrap" Text="Mot de Passe" VerticalAlignment="Top" Width="490" RenderTransformOrigin="0.5,0.5" UseLayoutRounding="False" d:LayoutRounding="Auto" GotFocus="PasswordBox_GotFocus">
-                                    <TextBox.RenderTransform>
-                                        <CompositeTransform SkewX="3.463" TranslateX="2.178"/>
-                                    </TextBox.RenderTransform>
-                                </TextBox>
-                                <TextBox x:Name="RePasswordBox" HorizontalAlignment="Left" Height="68" Margin="0,118,-24,0" TextWrapping="Wrap" Text="Confirmation du mot de passe" VerticalAlignment="Top" Width="480" GotFocus="RePasswordBox_GotFocus"/>
-                                <TextBox x:Name="EmailBox" HorizontalAlignment="Left" Height="72" Margin="0,186,-24,0" TextWrapping="Wrap" Text="Adresse E-Mail" VerticalAlignment="Top" Width="480" GotFocus="EmailBox_GotFocus"/>
-                                <CheckBox x:Name="CguBox" Content="j'accepte les conditions cgu&#xD;&#xA;" HorizontalAlignment="Left" Margin="0,239,0,0" VerticalAlignment="Top" Height="88"/>
-                                <Button x:Name="SendInscriptionButton" Content="Inscription&#xD;&#xA;" HorizontalAlignment="Left" Height="78" Margin="0,287,-24,0" VerticalAlignment="Top" RenderTransformOrigin="-1.333,0.64" Width="480" Click="SendInscriptionButton_Click"/>
-                                <TextBlock HorizontalAlignment="Left" Margin="124,365,0,0" TextWrapping="Wrap" Text="Ou via les reseau sociaux" VerticalAlignment="Top"/>
-                                <Button Content="Facebook" HorizontalAlignment="Left" Margin="0,392,-24,0" VerticalAlignment="Top" Width="480"/>
-                                <Button Content="Twitter" HorizontalAlignment="Left" Margin="0,448,-24,0" VerticalAlignment="Top" RenderTransformOrigin="-0.503,0.687" Width="480"/>
-                                <Button Content="Google+" HorizontalAlignment="Left" Margin="0,508,-24,0" VerticalAlignment="Top" Width="480" RenderTransformOrigin="0.485,0.563"/>
+                            <Grid Margin="0,-10,0,10">
+                                <TextBox Foreground="#4E4E4E"  x:Name="NameBox" HorizontalAlignment="Left" Height="72" Margin="0,40,-34,0" TextWrapping="Wrap" Text="Jean-Michelle" VerticalAlignment="Top" Width="490" GotFocus="NameBox_GotFocus"/>
+                                <PasswordBox Password="azerty" x:Name="PasswordBox" GotFocus="PasswordBox_GotFocus" Height="71" VerticalAlignment="Bottom" Margin="0,0,-34,375"/>
+
+                                <TextBox  Foreground="#4E4E4E"  x:Name="EmailBox" HorizontalAlignment="Left" Height="72" Margin="0,323,-24,0" TextWrapping="Wrap" Text="Exemple@gmail.com" VerticalAlignment="Top" Width="480" GotFocus="EmailBox_GotFocus"/>
+                                <CheckBox  Foreground="#4E4E4E"  x:Name="CguBox" Content="j'accepte les conditions cgu&#xD;&#xA;" HorizontalAlignment="Left" Margin="10,407,0,0" VerticalAlignment="Top" Height="88"/>
+                                <Button  Foreground="#4E4E4E"  x:Name="SendInscriptionButton" Content="Inscription&#xD;&#xA;" HorizontalAlignment="Left" Height="78" Margin="0,468,-24,0" VerticalAlignment="Top" RenderTransformOrigin="-1.333,0.64" Width="480" Click="SendInscriptionButton_Click"/>
+                                <TextBlock  Foreground="#4E4E4E" FontWeight="Bold"  FontSize="25" x:Name="textBlock" HorizontalAlignment="Left" Margin="128,10,0,0" TextWrapping="Wrap" Text="Nom d'utilisateur" VerticalAlignment="Top"/>
+                                <TextBlock Foreground="#4E4E4E"   FontWeight="Bold"  FontSize="25" x:Name="textBlock1" HorizontalAlignment="Left" Margin="150,0,0,439" TextWrapping="Wrap" Text="Mot de passe" VerticalAlignment="Bottom"/>
+                                <TextBlock  Foreground="#4E4E4E"  FontWeight="Bold"  FontSize="25" x:Name="textBlock2" HorizontalAlignment="Left" Margin="104,200,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Text="Confirmer mot de passe"/>
+                                <TextBlock  Foreground="#4E4E4E"   FontWeight="Bold"  FontSize="25" x:Name="textBlock3" HorizontalAlignment="Left" Margin="198,290,0,0" TextWrapping="Wrap" Text="Email" VerticalAlignment="Top" RenderTransformOrigin="0.339,-1.697"/>
+                                <PasswordBox x:Name="RePasswordBox" HorizontalAlignment="Left" Margin="0,227,-24,0" VerticalAlignment="Top" Width="480" Password="azerty" GotFocus="RePasswordBox_GotFocus"/>
                             </Grid>
                         </phone:PivotItem>
-                        <phone:PivotItem CacheMode="{x:Null}" Header="Connection" Margin="10,25,2,3">
+                        <phone:PivotItem CacheMode="{x:Null}" Header="Connexion" Margin="10,25,2,3">
                             <Grid Margin="0,-42,-19,42">
-                                <TextBlock HorizontalAlignment="Left" Margin="126,348,0,0" TextWrapping="Wrap" Text="Ou via les reseau sociaux" VerticalAlignment="Top"/>
-                                <Button Content="Facebook" HorizontalAlignment="Left" Margin="-3,390,0,0" VerticalAlignment="Top" Width="480" RenderTransformOrigin="0.491,-1.375"/>
-                                <Button Content="Twitter" HorizontalAlignment="Left" Margin="-3,462,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.503,0.687" Width="480"/>
-                                <Button Content="Google+" HorizontalAlignment="Left" Margin="-3,539,0,-35" VerticalAlignment="Top" Width="480" RenderTransformOrigin="0.485,0.563" Height="76"/>
-                                <TextBlock HorizontalAlignment="Left" Margin="106,29,0,0" TextWrapping="Wrap" Text="Via email ou identifiant" VerticalAlignment="Top" FontWeight="Bold" FontSize="24"/>
-                                <TextBox x:Name="usernameBox" HorizontalAlignment="Left" Height="72" Margin="0,61,0,0" TextWrapping="Wrap" Text="exemple@gmail.com" VerticalAlignment="Top" Width="480" GotFocus="usernameBox_GotFocus"/>
-                                <TextBlock HorizontalAlignment="Left" Margin="166,138,0,0" TextWrapping="Wrap" Text="Mot de passe" VerticalAlignment="Top" FontSize="24"/>
-
-                                <HyperlinkButton Content="Mot de passe oublie?" HorizontalAlignment="Left" Margin="260,247,0,0" VerticalAlignment="Top" FontSize="18"/>
-                                <Button x:Name="SendConnexionButton" Content="Connexion" HorizontalAlignment="Left" Margin="0,276,0,0" VerticalAlignment="Top" Width="480" Click="SendConnexionButton_Click"/>
-                                <TextBox x:Name="passBox" HorizontalAlignment="Left" Height="72" Margin="0,175,0,0" TextWrapping="Wrap" Text="******" VerticalAlignment="Top" Width="480" GotFocus="passBox_GotFocus"/>
+                                <TextBlock  FontWeight="Bold" Foreground="#4E4E4E" HorizontalAlignment="Left" Margin="106,29,0,0" TextWrapping="Wrap" Text="Via email ou identifiant" VerticalAlignment="Top" FontSize="24"/>
+                                <TextBox Foreground="#4E4E4E" x:Name="usernameBox" HorizontalAlignment="Left" Height="72" Margin="0,61,0,0" TextWrapping="Wrap" Text="exemple@gmail.com" VerticalAlignment="Top" Width="480" GotFocus="usernameBox_GotFocus"/>
+                                <TextBlock  FontWeight="Bold" Foreground="#4E4E4E" HorizontalAlignment="Left" Margin="166,138,0,0" TextWrapping="Wrap" Text="Mot de passe" VerticalAlignment="Top" FontSize="24"/>
+                                <Button  Foreground="#4E4E4E" x:Name="SendConnexionButton" Content="Connexion" HorizontalAlignment="Left" Margin="-3,235,0,0" VerticalAlignment="Top" Width="483" Click="SendConnexionButton_Click"/>
+                                <!--<TextBox  Foreground="#4E4E4E" x:Name="passBox" HorizontalAlignment="Left" Height="72" Margin="0,175,0,0" TextWrapping="Wrap" Text="******" VerticalAlignment="Top" Width="480" GotFocus="passBox_GotFocus"/>-->
+                                <PasswordBox  x:Name="passBox"  GotFocus="passBox_GotFocus" Margin="-3,165,3,350" Password="*****" />
                             </Grid>
                         </phone:PivotItem>
                     </phone:Pivot>

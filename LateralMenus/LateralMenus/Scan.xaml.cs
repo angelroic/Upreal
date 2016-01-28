@@ -19,34 +19,44 @@ using System.Xml.Serialization;
 using System.Xml.Schema;
 using System.IO;
 using Microsoft.Phone.Tasks;
+using System.Windows.Media.Imaging;
 
 namespace LateralMenus
 {
     public partial class Scan : PhoneApplicationPage
     {
         CameraCaptureTask cameraCaptureTask;
+        BitmapImage image = new BitmapImage();
         public Scan()
         {
             InitializeComponent();
-      
+
             cameraCaptureTask = new CameraCaptureTask();
-            cameraCaptureTask.Completed += new EventHandler<PhotoResult>(cameraCaptureTask_Completed);
+            Loaded += new RoutedEventHandler(SearchView_Loaded);
+        }
+        void SearchView_Loaded(object sender, RoutedEventArgs e)
+        {
             cameraCaptureTask.Show();
 
         }
 
+        private void button_Click(object sender, RoutedEventArgs e)
+        {
+        }
+        protected override void OnNavigatedTo(NavigationEventArgs e)
+        {
+
+            cameraCaptureTask.Completed += new EventHandler<PhotoResult>(cameraCaptureTask_Completed);
+
+        }
 
         void cameraCaptureTask_Completed(object sender, PhotoResult e)
         {
             if (e.TaskResult == TaskResult.OK)
             {
-                Image myImage = new Image();
-                MessageBox.Show(e.ChosenPhoto.Length.ToString());
-
-                //Code to display the photo on the page in an image control named myImage.
-                System.Windows.Media.Imaging.BitmapImage bmp = new System.Windows.Media.Imaging.BitmapImage();
-                bmp.SetSource(e.ChosenPhoto);
-                myImage.Source = bmp;
+            
+                image.SetSource(e.ChosenPhoto);
+                myImage.Source = image;
             }
         }
         private void OpenClose_Left(object sender, RoutedEventArgs e)
@@ -147,64 +157,15 @@ namespace LateralMenus
                 NavigationService.Navigate(new Uri("/Profil.xaml", UriKind.Relative));
             }
         }
-        private void RankButton1_Click(object sender, RoutedEventArgs e)
-        {
-            RankButton1.IsChecked = true;
-            RankButton2.IsChecked = false;
-            RankButton3.IsChecked = false;
-            RankButton4.IsChecked = false;
-            RankButton5.IsChecked = false;
-        }
-
-        private void RankButton2_Click(object sender, RoutedEventArgs e)
-        {
-            RankButton1.IsChecked = false;
-            RankButton2.IsChecked = true;
-            RankButton3.IsChecked = false;
-            RankButton4.IsChecked = false;
-            RankButton5.IsChecked = false;
-        }
-
-        private void RankButton3_Click(object sender, RoutedEventArgs e)
-        {
-            RankButton1.IsChecked = false;
-            RankButton2.IsChecked = false;
-            RankButton3.IsChecked = true;
-            RankButton4.IsChecked = false;
-            RankButton5.IsChecked = false;
-        }
-
-        private void RankButton4_Click(object sender, RoutedEventArgs e)
-        {
-            RankButton1.IsChecked = false;
-            RankButton2.IsChecked = false;
-            RankButton3.IsChecked = false;
-            RankButton4.IsChecked = true;
-            RankButton5.IsChecked = false;
-        }
-
-        private void RankButton5_Click(object sender, RoutedEventArgs e)
-        {
-            RankButton1.IsChecked = false;
-            RankButton2.IsChecked = false;
-            RankButton3.IsChecked = false;
-            RankButton4.IsChecked = false;
-            RankButton5.IsChecked = true;
-        }
 
         private void RechercheBox_GotFocus(object sender, RoutedEventArgs e)
         {
             RechercheBox.Text = "";
         }
 
-        private void MyListe_Click(object sender, RoutedEventArgs e)
+        private void MyList_Click(object sender, RoutedEventArgs e)
         {
             NavigationService.Navigate(new Uri("/MyList.xaml", UriKind.Relative));
-        }
-
-        private void CarteFidel_Click(object sender, RoutedEventArgs e)
-        {
-            NavigationService.Navigate(new Uri("/CarteFidel.xaml", UriKind.Relative));
         }
 
         private void MyScan_Click(object sender, RoutedEventArgs e)
@@ -226,6 +187,7 @@ namespace LateralMenus
         {
             NavigationService.Navigate(new Uri("/MainPage.xaml", UriKind.Relative));
         }
+
 
     }
 }

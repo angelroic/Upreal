@@ -138,38 +138,46 @@ namespace LateralMenus
                 NavigationService.Navigate(new Uri("/Connect.xaml", UriKind.Relative));
             else
             {
-                MessageBox.Show("ok tu es co mais j ai pas fini ");
+                
             }
         }
 
         async private void SendConnexionButton_Click(object sender, RoutedEventArgs e)
         {
-            WebService web = new WebService();
-            var task = web.AskWebService("UserManager/connectAccount?username=" + usernameBox.Text + "&password=" + passBox.Text);
-            await task;
-            var query = web.value.Descendants();
-            foreach (XElement ele in query)
+            try
             {
-                if (ele.Name.ToString().Contains("return"))
+                WebService web = new WebService();
+                var task = web.AskWebService("UserManager/connectAccount?username=" + usernameBox.Text + "&password=" + passBox.Password);
+                await task;
+                var query = web.value.Descendants();
+                foreach (XElement ele in query)
                 {
-                    if (Convert.ToBoolean(ele.Value) == true)
+                    if (ele.Name.ToString().Contains("return"))
                     {
-                        Utilisateur.appSettings.Clear();
-           
-                        Utilisateur.isConnect = true;
-                        var b =  Find_id(usernameBox.Text);
-                        await b;
-                        var t = find_list(Utilisateur.id);
-                        await t;
-                        MessageBox.Show("Connexion reussi");
-                        NavigationService.Navigate(new Uri("/MainPage.xaml", UriKind.Relative));
-                    }
-                    else
-                    {
-                        MessageBox.Show("Compte utilisateur ou mot de passe incorrect");
+                        if (Convert.ToBoolean(ele.Value) == true)
+                        {
+                            Utilisateur.appSettings.Clear();
+
+                            Utilisateur.isConnect = true;
+                            var b = Find_id(usernameBox.Text);
+                            await b;
+                            var t = find_list(Utilisateur.id);
+                            await t;
+                            MessageBox.Show("Connexion reussi");
+                            NavigationService.Navigate(new Uri("/MainPage.xaml", UriKind.Relative));
+                        }
+                        else
+                        {
+                            MessageBox.Show("Compte utilisateur ou mot de passe incorrect");
+                        }
                     }
                 }
             }
+            catch
+            {
+                MessageBox.Show("Echec lors de la connexion");
+            }
+
         }
         async private Task<int> find_list(int id_user)
         {
@@ -181,7 +189,7 @@ namespace LateralMenus
             foreach (XElement ele in query)
             {
                 if (ele.Name.ToString().Contains("id") && ele.Name.ToString().Contains("id_user") == false)
-                {                 
+                {
                     listInfo.id = Convert.ToInt32(ele.Value);
                     var t = complet_list(Convert.ToInt32(ele.Value));
                     await t;
@@ -214,10 +222,10 @@ namespace LateralMenus
             var task = web.AskWebService("ProductManager/getProductInfo?id=" + id);
             await task;
             var query = web.value.Descendants();
-           
+
             foreach (XElement ele in query)
             {
-                if ( ele.Name.ToString().Contains("name"))
+                if (ele.Name.ToString().Contains("name"))
                 {
                     ListValue.Add(ele.Value);
                 }
@@ -233,7 +241,7 @@ namespace LateralMenus
             ListValue.Clear();
             foreach (XElement ele in query)
             {
-                if(ele.Name.ToString().Contains("id_product"))
+                if (ele.Name.ToString().Contains("id_product"))
                 {
                     var t = find_product(Convert.ToInt32(ele.Value));
                     await t;
@@ -309,7 +317,7 @@ namespace LateralMenus
         {
             WebService web = new WebService();
 
-            var task = web.AskWebService("UserManager/registerAccount?" + "username=" + NameBox.Text + "&" + "password=" + PasswordBox.Text + "&" + "email=" + EmailBox.Text);
+            var task = web.AskWebService("UserManager/registerAccount?" + "username=" + NameBox.Text + "&" + "password=" + PasswordBox.Password + "&" + "email=" + EmailBox.Text);
             await task;
             var query = web.value.Descendants();
             foreach (XElement ele in query)
@@ -327,55 +335,10 @@ namespace LateralMenus
                     }
                     else
                     {
-                        MessageBox.Show(ele.Value);
                         MessageBox.Show("Inscription reusi");
                     }
                 }
             }
-        }
-        private void RankButton1_Click(object sender, RoutedEventArgs e)
-        {
-            RankButton1.IsChecked = true;
-            RankButton2.IsChecked = false;
-            RankButton3.IsChecked = false;
-            RankButton4.IsChecked = false;
-            RankButton5.IsChecked = false;
-        }
-
-        private void RankButton2_Click(object sender, RoutedEventArgs e)
-        {
-            RankButton1.IsChecked = false;
-            RankButton2.IsChecked = true;
-            RankButton3.IsChecked = false;
-            RankButton4.IsChecked = false;
-            RankButton5.IsChecked = false;
-        }
-
-        private void RankButton3_Click(object sender, RoutedEventArgs e)
-        {
-            RankButton1.IsChecked = false;
-            RankButton2.IsChecked = false;
-            RankButton3.IsChecked = true;
-            RankButton4.IsChecked = false;
-            RankButton5.IsChecked = false;
-        }
-
-        private void RankButton4_Click(object sender, RoutedEventArgs e)
-        {
-            RankButton1.IsChecked = false;
-            RankButton2.IsChecked = false;
-            RankButton3.IsChecked = false;
-            RankButton4.IsChecked = true;
-            RankButton5.IsChecked = false;
-        }
-
-        private void RankButton5_Click(object sender, RoutedEventArgs e)
-        {
-            RankButton1.IsChecked = false;
-            RankButton2.IsChecked = false;
-            RankButton3.IsChecked = false;
-            RankButton4.IsChecked = false;
-            RankButton5.IsChecked = true;
         }
 
         private void NameBox_GotFocus(object sender, RoutedEventArgs e)
@@ -385,12 +348,12 @@ namespace LateralMenus
 
         private void PasswordBox_GotFocus(object sender, RoutedEventArgs e)
         {
-            PasswordBox.Text = "";
+            PasswordBox.Password = "";
         }
 
         private void RePasswordBox_GotFocus(object sender, RoutedEventArgs e)
         {
-            RePasswordBox.Text = "";
+            RePasswordBox.Password = "";
         }
 
         private void EmailBox_GotFocus(object sender, RoutedEventArgs e)
@@ -405,12 +368,16 @@ namespace LateralMenus
 
         private void passBox_GotFocus(object sender, RoutedEventArgs e)
         {
-            passBox.Text = "";
+            passBox.Password = "";
         }
 
-        private void MyListe_Click(object sender, RoutedEventArgs e)
+        private void RechercheBox_GotFocus(object sender, RoutedEventArgs e)
         {
-            NavigationService.Navigate(new Uri("/NyList.xaml", UriKind.Relative));
+            RechercheBox.Text = "";
+        }
+        private void MyList_Click(object sender, RoutedEventArgs e)
+        {
+            NavigationService.Navigate(new Uri("/MyList.xaml", UriKind.Relative));
         }
 
 
@@ -433,12 +400,6 @@ namespace LateralMenus
         {
             NavigationService.Navigate(new Uri("/MainPage.xaml", UriKind.Relative));
         }
-
-
-
-
-
-
 
     }
 }

@@ -152,66 +152,16 @@ namespace LateralMenus
                 NavigationService.Navigate(new Uri("/Profil.xaml", UriKind.Relative));
             }
         }
-        private void RankButton1_Click(object sender, RoutedEventArgs e)
-        {
-            RankButton1.IsChecked = true;
-            RankButton2.IsChecked = false;
-            RankButton3.IsChecked = false;
-            RankButton4.IsChecked = false;
-            RankButton5.IsChecked = false;
-        }
-
-        private void RankButton2_Click(object sender, RoutedEventArgs e)
-        {
-            RankButton1.IsChecked = false;
-            RankButton2.IsChecked = true;
-            RankButton3.IsChecked = false;
-            RankButton4.IsChecked = false;
-            RankButton5.IsChecked = false;
-        }
-
-        private void RankButton3_Click(object sender, RoutedEventArgs e)
-        {
-            RankButton1.IsChecked = false;
-            RankButton2.IsChecked = false;
-            RankButton3.IsChecked = true;
-            RankButton4.IsChecked = false;
-            RankButton5.IsChecked = false;
-        }
-
-        private void RankButton4_Click(object sender, RoutedEventArgs e)
-        {
-            RankButton1.IsChecked = false;
-            RankButton2.IsChecked = false;
-            RankButton3.IsChecked = false;
-            RankButton4.IsChecked = true;
-            RankButton5.IsChecked = false;
-        }
-
-        private void RankButton5_Click(object sender, RoutedEventArgs e)
-        {
-            RankButton1.IsChecked = false;
-            RankButton2.IsChecked = false;
-            RankButton3.IsChecked = false;
-            RankButton4.IsChecked = false;
-            RankButton5.IsChecked = true;
-        }
 
         private void RechercheBox_GotFocus(object sender, RoutedEventArgs e)
         {
             RechercheBox.Text = "";
         }
 
-        private void MyListe_Click(object sender, RoutedEventArgs e)
+        private void MyList_Click(object sender, RoutedEventArgs e)
         {
             NavigationService.Navigate(new Uri("/MyList.xaml", UriKind.Relative));
         }
-
-        private void CarteFidel_Click(object sender, RoutedEventArgs e)
-        {
-            NavigationService.Navigate(new Uri("/CarteFidel.xaml", UriKind.Relative));
-        }
-
         private void MyScan_Click(object sender, RoutedEventArgs e)
         {
             NavigationService.Navigate(new Uri("/scan.xaml", UriKind.Relative));
@@ -252,7 +202,6 @@ namespace LateralMenus
                     {
                         if (ele.Name.ToString().Contains("return"))
                         {
-                            MessageBox.Show(ele.Value);
                             Find_item_name_by_id(object_name);
                             MessageBox.Show("Produit bien ajoute a la liste");
                             NavigationService.GoBack();
@@ -266,7 +215,7 @@ namespace LateralMenus
         {
             WebService web = new WebService();
 
-            var task = web.AskWebService("ProductManager/getProductInfo?id" + id);
+            var task = web.AskWebService("ProductManager/getProductInfo?id=" + id);
             await task;
             var query = web.value.Descendants();
             foreach (XElement ele in query)
@@ -275,17 +224,13 @@ namespace LateralMenus
                 {
                     foreach (list t in Utilisateur.myList.Keys)
                     {
-                        if (t.name == ListBox.SelectedItems.ToString())
+                        if (t.name.Equals(ListBox.SelectedItems[0]))
                         {
                             Utilisateur.myList[t].Add(ele.Value);
-
                         }
                     }
-
                 }
-
             }
-
         }
     }
 }

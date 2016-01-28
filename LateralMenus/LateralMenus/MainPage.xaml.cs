@@ -231,64 +231,14 @@ namespace LateralMenus
             }
         }
 
-        private void RankButton1_Click(object sender, RoutedEventArgs e)
-        {
-            RankButton1.IsChecked = true;
-            RankButton2.IsChecked = false;
-            RankButton3.IsChecked = false;
-            RankButton4.IsChecked = false;
-            RankButton5.IsChecked = false;
-        }
-
-        private void RankButton2_Click(object sender, RoutedEventArgs e)
-        {
-            RankButton1.IsChecked = false;
-            RankButton2.IsChecked = true;
-            RankButton3.IsChecked = false;
-            RankButton4.IsChecked = false;
-            RankButton5.IsChecked = false;
-        }
-
-        private void RankButton3_Click(object sender, RoutedEventArgs e)
-        {
-            RankButton1.IsChecked = false;
-            RankButton2.IsChecked = false;
-            RankButton3.IsChecked = true;
-            RankButton4.IsChecked = false;
-            RankButton5.IsChecked = false;
-        }
-
-        private void RankButton4_Click(object sender, RoutedEventArgs e)
-        {
-            RankButton1.IsChecked = false;
-            RankButton2.IsChecked = false;
-            RankButton3.IsChecked = false;
-            RankButton4.IsChecked = true;
-            RankButton5.IsChecked = false;
-        }
-
-        private void RankButton5_Click(object sender, RoutedEventArgs e)
-        {
-            RankButton1.IsChecked = false;
-            RankButton2.IsChecked = false;
-            RankButton3.IsChecked = false;
-            RankButton4.IsChecked = false;
-            RankButton5.IsChecked = true;
-        }
-
         private void RechercheBox_GotFocus(object sender, RoutedEventArgs e)
         {
             RechercheBox.Text = "";
         }
 
-        private void MyListe_Click(object sender, RoutedEventArgs e)
+        private void MyList_Click(object sender, RoutedEventArgs e)
         {
             NavigationService.Navigate(new Uri("/MyList.xaml", UriKind.Relative));
-        }
-
-        private void CarteFidel_Click(object sender, RoutedEventArgs e)
-        {
-            NavigationService.Navigate(new Uri("/CarteFidel.xaml", UriKind.Relative));
         }
 
         private void MyScan_Click(object sender, RoutedEventArgs e)

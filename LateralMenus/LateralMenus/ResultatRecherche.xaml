@@ -24,21 +24,17 @@
             <Border Width="420"  CacheMode="BitmapCache" Background="#FF31363E" Grid.Column="0" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Height="{Binding ActualHeight, ElementName=canvas}">
                 <Grid>
                     <Grid HorizontalAlignment="Left" Height="124" VerticalAlignment="Top" Width="400">
-                        <Button x:Name="ConnexionButton" Content="Connexion" HorizontalAlignment="Left" Margin="10,21,0,0" VerticalAlignment="Top" Width="380" Click="ConnexionButton_Click"/>
+                        <Button x:Name="ConnexionButton" Content="Connexion" HorizontalAlignment="Left"  Margin="20,10,0,0" VerticalAlignment="Top" Width="380" Click="ConnexionButton_Click" FontWeight="Bold"/>
                     </Grid>
                     <Grid HorizontalAlignment="Left" Height="661" Margin="10,124,0,0" VerticalAlignment="Top" Width="400">
-                        <Button Content="Scan" HorizontalAlignment="Left" Margin="-13,0,-10,0" VerticalAlignment="Top" Width="423" Click="MyScan_Click"/>
-                        <Button Content="Mes listes" HorizontalAlignment="Left" Margin="-13,51,-10,0" VerticalAlignment="Top" Width="423" Click="MyListe_Click"/>
-                        <Button Content="Actualite" HorizontalAlignment="Left" Margin="-13,123,-10,0" VerticalAlignment="Top" Width="423" Click="Actualite_Click"/>
-                            <Button Content="Succes" HorizontalAlignment="Left" Margin="-13,443,-10,0" VerticalAlignment="Top" Width="423"/>
-                        <Button Content="Parametre" HorizontalAlignment="Left" Margin="-13,571,-10,0" VerticalAlignment="Top" Width="423" Click="Parametre_Click"/>
+                        <Button Content="Scan" HorizontalAlignment="Left" Margin="-13,124,-10,0" VerticalAlignment="Top" Width="423" Click="MyScan_Click" Height="87"/>
+                        <Button Content="Mes listes" HorizontalAlignment="Left" Margin="-13,51,-10,0" VerticalAlignment="Top" Width="423" Click="MyList_Click" Height="88"/>
+                        <Button Content="Actualite" HorizontalAlignment="Left" Margin="-13,-21,-10,0" VerticalAlignment="Top" Width="423" Click="Actualite_Click" RenderTransformOrigin="0.515,0.167" Height="87"/>
+                        <Button Content="Parametre" HorizontalAlignment="Left" Margin="-13,196,-10,0" VerticalAlignment="Top" Width="423" Click="Parametre_Click"/>
                     </Grid>
-
                 </Grid>
-
-
             </Border>
-            <Border Width="420" Margin="900,0,0,0" CacheMode="BitmapCache" Background="#FF31363E" Grid.Column="2" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Height="{Binding ActualHeight, ElementName=canvas}">
+            <!--<Border Width="420" Margin="900,0,0,0" CacheMode="BitmapCache" Background="#FF31363E" Grid.Column="2" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Height="{Binding ActualHeight, ElementName=canvas}">
                 <Grid>
                     <Grid HorizontalAlignment="Left" Height="800" VerticalAlignment="Top" Width="420">
                         <TextBox x:Name="RechercheBox" HorizontalAlignment="Left" Height="72" Margin="10,0,0,0" TextWrapping="Wrap" Text="produits,marque,magasin,utilisateur" VerticalAlignment="Top" Width="410" GotFocus="RechercheBox_GotFocus"/>
@@ -51,15 +47,10 @@
 
                         </ListBox>
                         <Grid HorizontalAlignment="Left" Height="304" Margin="10,294,0,0" VerticalAlignment="Top" Width="405">
-                            <RadioButton x:Name="RankButton5" Content="5 etoiles" HorizontalAlignment="Left" VerticalAlignment="Top" Click="RankButton5_Click"/>
-                            <RadioButton x:Name="RankButton4" Content="4 etoiles" HorizontalAlignment="Left" Margin="0,54,0,0" VerticalAlignment="Top" Height="75" Click="RankButton4_Click"/>
-                            <RadioButton x:Name="RankButton3" Content="3 etoiles" HorizontalAlignment="Left" Margin="0,115,0,0" VerticalAlignment="Top" Click="RankButton3_Click"/>
-                            <RadioButton x:Name="RankButton2" Content="2 etoiles" HorizontalAlignment="Left" Margin="0,174,0,0" VerticalAlignment="Top" Click="RankButton2_Click"/>
-                            <RadioButton x:Name="RankButton1" Content="1 etoile" HorizontalAlignment="Left" Margin="0,232,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.43,-0.031" IsChecked="True" Click="RankButton1_Click"/>
                         </Grid>
                     </Grid>
                 </Grid>
-            </Border>
+            </Border>-->
             <Grid x:Name="grdCommands" Margin="420,0,0,0" CacheMode="BitmapCache" Grid.Column="1" Background="#FFCFD4E2" Height="{Binding ActualHeight, ElementName=canvas}" Width="480" >
                 <Grid.RowDefinitions>
                     <RowDefinition Height="76"/>
@@ -67,25 +58,31 @@
                 </Grid.RowDefinitions>
                 <Grid Grid.Row="0" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Background="#FF3B5998">
                     <Button  Click="OpenClose_Left" Content="" HorizontalAlignment="Left" VerticalAlignment="Top" Width="80" Height="80"/>
-                    <Button  Click="OpenClose_Right" Content="" HorizontalAlignment="Right" VerticalAlignment="Top" Width="80" Height="80"/>
-                    <TextBlock HorizontalAlignment="Left" Margin="102,22,0,22" TextWrapping="Wrap" Text="Resultat de la recherche" VerticalAlignment="Center" FontSize="24"/>
+                    <TextBox x:Name="RechercheBox" HorizontalAlignment="Left" Height="72" Margin="170,4,0,0" TextWrapping="Wrap" Text="Rechercher" VerticalAlignment="Top" Width="245" GotFocus="RechercheBox_GotFocus"/>
+                    <Button x:Name="SendRequestButton" HorizontalAlignment="Stretch" Margin="395,4,0,0" Click="SendRequestButton_Click" Content="&gt;"/>
                 </Grid>
                 <Border Grid.Row="1" Background="#FFCFD4E2" Margin="0,5,0,-5">
                     <phone:Pivot Margin="0,-9,0,0">
+                        <phone:Pivot.HeaderTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding}" Foreground="#0E4F91" />
+                            </DataTemplate>
+                        </phone:Pivot.HeaderTemplate>
                         <phone:PivotItem CacheMode="{x:Null}" Header="Produit" Margin="0,28,12,0">
-                            <ListBox x:Name="ProduitList" ItemsSource="{Binding}" HorizontalAlignment="Center" DoubleTap="ProduitList_DoubleTap">
+                            <ListBox  x:Name="ProduitList"  FontSize="25" Foreground="#4E4E4E" ItemsSource="{Binding}" HorizontalAlignment="Center" DoubleTap="ProduitList_DoubleTap">
+                           
                                 <ListBox.ItemTemplate>
                                     <DataTemplate>
                                         <StackPanel Orientation="Vertical">
                                             <TextBlock x:Name="Titre" Text="{Binding name}"/>
-                                            <Image x:Name="ImageProduct" Source="{Binding imagePath}" Stretch="Fill" Width="150" Height="150"/>
+                                            <Image  x:Name="ImageProduct" Source="{Binding imagePath}" Stretch="Fill" Width="150" Height="150"/>
                                         </StackPanel>
                                     </DataTemplate>
                                 </ListBox.ItemTemplate>
                             </ListBox>
                         </phone:PivotItem>
                         <phone:PivotItem CacheMode="{x:Null}" Header="Utilisateurs">
-                            <ListBox x:Name="UtilisateurList" ItemsSource="{Binding}" HorizontalAlignment="Center" Height="599" VerticalAlignment="Top" Width="456">
+                            <ListBox x:Name="UtilisateurList" FontSize="25" Foreground="#4E4E4E" ItemsSource="{Binding}" HorizontalAlignment="Center" Height="599" VerticalAlignment="Top" Width="456">
                                 <ListBox.ItemTemplate>
                                     <DataTemplate>
                                         <StackPanel Orientation="Vertical">
@@ -97,7 +94,7 @@
                             </ListBox>
                         </phone:PivotItem>
                         <phone:PivotItem CacheMode="{x:Null}" Header="Marque">
-                             <ListBox x:Name="MarqueList" ItemsSource="{Binding}" HorizontalAlignment="Center" Height="599" VerticalAlignment="Top" Width="456">
+                            <ListBox x:Name="MarqueList"  FontSize="25" Foreground="#4E4E4E" ItemsSource="{Binding}" HorizontalAlignment="Center" Height="599" VerticalAlignment="Top" Width="456">
                                 <ListBox.ItemTemplate>
                                     <DataTemplate>
                                         <StackPanel Orientation="Vertical">
@@ -109,7 +106,7 @@
                             </ListBox>
                         </phone:PivotItem>
                         <phone:PivotItem CacheMode="{x:Null}" Header="Magasin">
-                            <ListBox x:Name="StoreList" ItemsSource="{Binding}" HorizontalAlignment="Center" Height="599" VerticalAlignment="Top" Width="456" DoubleTap="StoreList_DoubleTap">
+                            <ListBox x:Name="StoreList"  FontSize="25" Foreground="#4E4E4E" ItemsSource="{Binding}" HorizontalAlignment="Center" Height="599" VerticalAlignment="Top" Width="456" DoubleTap="StoreList_DoubleTap">
                                 <ListBox.ItemTemplate>
                                     <DataTemplate>
                                         <StackPanel Orientation="Vertical">
@@ -126,32 +123,6 @@
                 </Border>
             </Grid>
         </Canvas>
-        <phone:Panorama Height="600" Canvas.Left="725" Canvas.Top="1219" Title="panorama" Width="300">
-            <phone:PanoramaItem CacheMode="{x:Null}" Header="item1">
-                <phone:PanoramaItem.RenderTransform>
-                    <TranslateTransform/>
-                </phone:PanoramaItem.RenderTransform>
-                <Grid/>
-            </phone:PanoramaItem>
-            <phone:PanoramaItem CacheMode="{x:Null}" Header="item2">
-                <phone:PanoramaItem.RenderTransform>
-                    <TranslateTransform/>
-                </phone:PanoramaItem.RenderTransform>
-                <Grid/>
-            </phone:PanoramaItem>
-            <phone:PanoramaItem CacheMode="{x:Null}" Header="item1">
-                <phone:PanoramaItem.RenderTransform>
-                    <TranslateTransform/>
-                </phone:PanoramaItem.RenderTransform>
-                <Grid/>
-            </phone:PanoramaItem>
-            <phone:PanoramaItem CacheMode="{x:Null}" Header="item2">
-                <phone:PanoramaItem.RenderTransform>
-                    <TranslateTransform/>
-                </phone:PanoramaItem.RenderTransform>
-                <Grid/>
-            </phone:PanoramaItem>
-        </phone:Panorama>
     </Canvas>
 
 </phone:PhoneApplicationPage>

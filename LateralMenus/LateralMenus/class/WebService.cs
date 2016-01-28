@@ -28,8 +28,8 @@ namespace LateralMenus
 {
     class WebService
     {
-        public string ecole = "http://10.224.9.202//UpReal/services/";
-        public string maison = "http://163.5.84.202//UpReal/services/";
+        public string maison = "http://10.224.9.202//UpReal/services/";
+        public string ecole = "http://163.5.84.202//UpReal/services/";
         public XElement value;
         async public Task<int> AskWebService(string web)
         {
