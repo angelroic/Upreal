@@ -64,9 +64,7 @@ namespace LateralMenus
                         do_my_comment(ele.Value);
                     }
                 }
-
             }
-
         }
 
         async private void do_my_comment(string id)
@@ -104,7 +102,7 @@ namespace LateralMenus
             {
                 if (ele.Name.ToString().Contains("return"))
                 {
-                    CommentList.Items.Add(comment + "\t" + ele.Value);
+                    CommentList.Items.Add(comment);
                 }
             }
         }

@@ -60,7 +60,7 @@
                     <TextBox x:Name="RechercheBox" HorizontalAlignment="Left" Height="72" Margin="170,4,0,0" TextWrapping="Wrap" Text="Rechercher" VerticalAlignment="Top" Width="245" GotFocus="RechercheBox_GotFocus"/>
                     <Button x:Name="SendRequestButton" HorizontalAlignment="Stretch" Margin="395,4,0,0" Click="SendRequestButton_Click" Content="&gt;"/>
                 </Grid>
-                <TextBlock HorizontalAlignment="Left" Foreground="#0E4F91" Margin="148,23,0,0" TextWrapping="Wrap" Text="Ajout de commentaire" VerticalAlignment="Top"/>
+                <TextBlock HorizontalAlignment="Left" Foreground="#0E4F91" Margin="143,10,0,0" TextWrapping="Wrap" Text="Ajout de commentaire" VerticalAlignment="Top" Grid.Row="1"/>
                 <Button Content="Annuler"  Foreground="#4E4E4E" HorizontalAlignment="Left" Margin="24,623,0,0" Grid.Row="1" VerticalAlignment="Top" RenderTransformOrigin="0.097,0.502" Width="226" Click="Annuler_Click"/>
                 <Button Content="Envoyer"  Foreground="#4E4E4E" HorizontalAlignment="Left" Margin="234,623,0,0" Grid.Row="1" VerticalAlignment="Top" Width="236" Click="Envoyer_Click"/>
                 <TextBox x:Name="CommentText"  Foreground="#4E4E4E" HorizontalAlignment="Left" Height="586" Margin="0,37,0,0" Grid.Row="1" TextWrapping="Wrap" VerticalAlignment="Top" Width="480"/>

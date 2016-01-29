@@ -70,24 +70,23 @@
                         </phone:Pivot.HeaderTemplate>
                         <phone:PivotItem CacheMode="{x:Null}" Header="Produit" Margin="0,28,12,0">
                             <ListBox  x:Name="ProduitList"  FontSize="25" Foreground="#4E4E4E" ItemsSource="{Binding}" HorizontalAlignment="Center" DoubleTap="ProduitList_DoubleTap">
-                           
                                 <ListBox.ItemTemplate>
                                     <DataTemplate>
-                                        <StackPanel Orientation="Vertical">
-                                            <TextBlock x:Name="Titre" Text="{Binding name}"/>
-                                            <Image  x:Name="ImageProduct" Source="{Binding imagePath}" Stretch="Fill" Width="150" Height="150"/>
+                                        <StackPanel Orientation="Vertical" Margin="0" HorizontalAlignment="Stretch">
+                                            <TextBlock x:Name="Titre" Text="{Binding name}" HorizontalAlignment="Center"/>
+                                            <Image  x:Name="ImageProduct" Source="{Binding imagePath}" Stretch="Fill" Width="200" Height="375" HorizontalAlignment="Center"/>
                                         </StackPanel>
                                     </DataTemplate>
                                 </ListBox.ItemTemplate>
                             </ListBox>
                         </phone:PivotItem>
                         <phone:PivotItem CacheMode="{x:Null}" Header="Utilisateurs">
-                            <ListBox x:Name="UtilisateurList" FontSize="25" Foreground="#4E4E4E" ItemsSource="{Binding}" HorizontalAlignment="Center" Height="599" VerticalAlignment="Top" Width="456">
+                            <ListBox x:Name="UtilisateurList" FontSize="25" Foreground="#4E4E4E" ItemsSource="{Binding}" HorizontalAlignment="Center" Height="599" VerticalAlignment="Center" Width="456">
                                 <ListBox.ItemTemplate>
                                     <DataTemplate>
-                                        <StackPanel Orientation="Vertical">
-                                            <TextBlock x:Name="Titre" Text="{Binding name}"/>
-                                            <Image x:Name="ImageProduct" Source="{Binding imagePath}" Stretch="Fill" Width="150" Height="150"/>
+                                        <StackPanel Orientation="Vertical" VerticalAlignment="Center" HorizontalAlignment="Stretch" Margin="150,0">
+                                            <TextBlock x:Name="Titre" Text="{Binding name}" HorizontalAlignment="Center"  />
+                                            <Image x:Name="ImageProduct" Source="{Binding imagePath}" Stretch="Fill" Width="150" Height="150" HorizontalAlignment="Center" />
                                         </StackPanel>
                                     </DataTemplate>
                                 </ListBox.ItemTemplate>

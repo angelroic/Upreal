@@ -226,7 +226,8 @@ namespace LateralMenus
                     {
                         if (t.name.Equals(ListBox.SelectedItems[0]))
                         {
-                            Utilisateur.myList[t].Add(ele.Value);
+                            if (!Utilisateur.myList[t].Contains(ele.Value))
+                                Utilisateur.myList[t].Add(ele.Value);
                         }
                     }
                 }
